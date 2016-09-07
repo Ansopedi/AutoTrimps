@@ -384,7 +384,7 @@ function getEnemyMaxAttack(world, level, name, diff, corrupt) {
 
 function getEnemyMaxHealth(world, level, corrupt) {
     if (!level)
-        level = 30;
+        level = 1;
     var amt = 0;
     amt += 130 * Math.sqrt(world) * Math.pow(3.265, world / 2);
     amt -= 110;
@@ -2802,7 +2802,7 @@ function useScryerStance() {
     	//baseDamage
     	baseDamage = game.global.soldierCurrentAttack * (1 + (game.global.achievementBonus / 100)) * ((game.global.antiStacks * game.portal.Anticipation.level * game.portal.Anticipation.modifier) + 1) * (1 + (game.global.roboTrimpLevel * 0.2));
     	if (game.global.formation == 0) {
-    		baseDamage *= 2;
+    		baseDamage *= 4;
     	} else if (game.global.formation != "2") {
     	    baseDamage *= 8;
     	}
@@ -2826,9 +2826,8 @@ function useScryerStance() {
         setPageSetting('ScryerUseWhenOverkill',false);
     //Overkill button being on and being able to overkill in S will override any other setting, regardless.
     if (useoverkill && game.portal.Overkill.level > 0) {
-        var avgDamage = baseDamage * ((getPlayerCritDamageMult() * getPlayerCritChance()) + (1 - getPlayerCritChance()));
-        var Sstance = 0.125;
-        var ovkldmg = avgDamage * Sstance * (game.portal.Overkill.level*0.005);
+        var avgDamage = baseDamage;
+        var ovkldmg = avgDamage;
         //are we going to overkill in S?
         ovklHDratio = ovkldmg/(getEnemyMaxHealth(game.global.world)*getCorruptScale("health")*7);
         hiderwindow = ovklHDratio*100;
