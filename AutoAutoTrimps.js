@@ -2609,7 +2609,6 @@ function doPortal(challenge) {
     activatePortal();
     lastHeliumZone = 0;
     pastUpgradesBtn = viewPortalUpgrades();
-    allocatorBTN1 = AutoPerks.parseData();
     activatePortalBtn = activateClicked();
 }
 
