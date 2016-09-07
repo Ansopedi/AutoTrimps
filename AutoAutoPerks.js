@@ -15,7 +15,7 @@ AutoPerks = {};
 var head = document.getElementsByTagName('head')[0];
 var queuescript = document.createElement('script');
 queuescript.type = 'text/javascript';
-queuescript.src = 'https://Hider-The-First.github.io/AutoTrimps/FastPriorityQueue.js';
+queuescript.src = 'https://ansopedi.github.io/AutoTrimps/FastPriorityQueue.js';
 head.appendChild(queuescript);
 
 //Create button and Add to Trimps Perk Window(and Portal)
