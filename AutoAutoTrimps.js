@@ -1702,7 +1702,7 @@ function autoStance() {
     //baseDamage
     baseDamage = game.global.soldierCurrentAttack * (1 + (game.global.achievementBonus / 100)) * ((game.global.antiStacks * game.portal.Anticipation.level * game.portal.Anticipation.modifier) + 1) * (1 + (game.global.roboTrimpLevel * 0.2));
     	if (game.global.formation == 0) {
-    		baseDamage *= 2;
+    		baseDamage *= 4;
     	} else if (game.global.formation != "2") {
     	    baseDamage *= 8;
     	}
@@ -1727,18 +1727,17 @@ function autoStance() {
         setPageSetting('ScryerUseWhenOverkill',false);
     //Overkill button being on and being able to overkill in S will override any other setting, regardless.
     if (useoverkill && game.portal.Overkill.level > 0) {
-        var avgDamage = baseDamage * ((getPlayerCritDamageMult() * getPlayerCritChance()) + (1 - getPlayerCritChance()));
-        var Sstance = 0.125;
-        var ovkldmg = avgDamage * Sstance * (game.portal.Overkill.level*0.005);
+        var avgDamage = baseDamage;
+        var ovkldmg = avgDamage;
         //are we going to overkill in S?
-        ovklHDratio = ovkldmg/(getEnemyMaxHealth(game.global.world,1,true)*getCorruptScale("health")*7);
-        hiderwindow = ovklHDratio*100;
+        ovklHDratio = ovkldmg/(getEnemyMaxHealth(game.global.world,1,true));
+        hiderwindow = ovklHDratio*50;
         Area51i = ovkldmg;
-        Area60i = getEnemyMaxHealth(game.global.world)*getCorruptScale("health")*7;
+        Area60i = getEnemyMaxHealth(game.global.world,1,true);
         armorValue = ((baseHealth/8)/(getEnemyMaxAttack(game.global.world, 95, 'Snimp',0)*getCorruptScale("attack")));
         armorTempValue = (game.global.soldierHealth/(getEnemyMaxAttack(game.global.world, 95, 'Snimp',0)*getCorruptScale("attack")));
-        if (hiderwindow > 100) { // && game.global.world < getPageSetting('VoidMaps')
-            hiderwindow = 100; //enoughDamage = true; enoughHealth = true; shouldFarm = false;
+        if (hiderwindow > 50) { // && game.global.world < getPageSetting('VoidMaps')
+            hiderwindow = 50; //enoughDamage = true; enoughHealth = true; shouldFarm = false;
         }
     }
     if (game.global.mapsActive && (getCurrentEnemy(1).name == "Jestimp" || getCurrentEnemy(1).name == "Chronoimp" ||  (hiderwindow > 0.2 && getCurrentMapObject().location != "Void"))) {
@@ -2829,14 +2828,14 @@ function useScryerStance() {
         var avgDamage = baseDamage;
         var ovkldmg = avgDamage;
         //are we going to overkill in S?
-        ovklHDratio = ovkldmg/(getEnemyMaxHealth(game.global.world,1,true)*getCorruptScale("health")*7);
-        hiderwindow = ovklHDratio*100;
+        ovklHDratio = ovkldmg/(getEnemyMaxHealth(game.global.world,1,true));
+        hiderwindow = ovklHDratio*50;
         Area51i = ovkldmg;
-        Area60i = getEnemyMaxHealth(game.global.world)*getCorruptScale("health")*7;
+        Area60i = getEnemyMaxHealth(game.global.world,1,true);
         armorValue = ((baseHealth/8)/(getEnemyMaxAttack(game.global.world, 95, 'Snimp',0)*getCorruptScale("attack")));
         armorTempValue = (game.global.soldierHealth/(getEnemyMaxAttack(game.global.world, 95, 'Snimp',0)*getCorruptScale("attack")));
-        if (hiderwindow > 100) { // && game.global.world < getPageSetting('VoidMaps')
-            hiderwindow = 100; //enoughDamage = true; enoughHealth = true; shouldFarm = false;
+        if (hiderwindow > 50) { // && game.global.world < getPageSetting('VoidMaps')
+            hiderwindow = 50; //enoughDamage = true; enoughHealth = true; shouldFarm = false;
         }
     //quit here if its right
     }
