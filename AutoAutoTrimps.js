@@ -1731,7 +1731,7 @@ function autoStance() {
         var Sstance = 0.125;
         var ovkldmg = avgDamage * Sstance * (game.portal.Overkill.level*0.005);
         //are we going to overkill in S?
-        ovklHDratio = ovkldmg/(getEnemyMaxHealth(game.global.world)*getCorruptScale("health")*7);
+        ovklHDratio = ovkldmg/(getEnemyMaxHealth(game.global.world,1,true)*getCorruptScale("health")*7);
         hiderwindow = ovklHDratio*100;
         Area51i = ovkldmg;
         Area60i = getEnemyMaxHealth(game.global.world)*getCorruptScale("health")*7;
