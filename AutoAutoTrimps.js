@@ -1995,18 +1995,6 @@ function autoMap() {
         enemyHealth *= 2;
     }
     var pierceMod = 0;
-    if(game.global.challengeActive == 'Lead') {
-        enemyDamage *= (1 + (game.challenges.Lead.stacks * 0.04));
-        enemyHealth *= (1 + (game.challenges.Lead.stacks * 0.04));
-        if (game.global.world % 2 == 1){
-            enemyDamage = getEnemyMaxAttack(game.global.world + 2, 30, 'Chimp', 1); //calculate for the next level in advance (since we only farm on odd, and evens are very tough)
-            enemyHealth = getEnemyMaxHealth(game.global.world + 2);
-            baseDamage /= 1.5; //subtract the odd-zone bonus.
-        }
-        pierceMod += (game.challenges.Lead.stacks * 0.001);
-        baseDamage /= mapbonusmulti;
-        shouldFarm = enemyHealth / baseDamage > 5;
-    }
     enoughHealth = (baseHealth * 4 > 30 * (enemyDamage - baseBlock / 2 > 0 ? enemyDamage - baseBlock / 2 : enemyDamage * (0.2 + pierceMod))
                     || 
                     baseHealth > 30 * (enemyDamage - baseBlock > 0 ? enemyDamage - baseBlock : enemyDamage * (0.2 + pierceMod)));
@@ -2021,45 +2009,11 @@ function autoMap() {
 //BEGIN AUTOMAPS DECISIONS:
     //if we are at max map bonus, and we don't need to farm, don't do maps
     if(game.global.mapBonus == 10 && !shouldFarm) shouldDoMaps = false;
-    
-    //FarmWhenNomStacks7
-    if(game.global.challengeActive == 'Nom' && getPageSetting('FarmWhenNomStacks7')) {
-        if (game.global.gridArray[99].nomStacks > 7){
-            if (game.global.mapBonus != 10)
-                shouldDoMaps = true;
-        }
-        //Go into maps on 30 stacks, and I assume our enemy health to damage ratio is worse than 10 (so that shouldfarm would be true),
-        // and exit farming once we get enough damage to drop under 10.
-        if (game.global.gridArray[99].nomStacks == 30){
-            shouldFarm = (HDratio > 20);
-            shouldDoMaps = true;
-        }
-    }
-
     //stack tox stacks if heliumGrowing has been set to true, or if we need to clear our void maps
-    if(game.global.challengeActive == 'Toxicity' && game.global.lastClearedCell > 93 && game.challenges.Toxicity.stacks < 1500 && ((getPageSetting('MaxTox') && game.global.world > 59) || needToVoid)) {
-        shouldDoMaps = true;
-        //we willl get at least 85 toxstacks from the 1st voidmap (unless we have overkill)
-//            if (!game.portal.Overkill.locked && game.stats.cellsOverkilled.value)
-            
-        stackingTox = !(needToVoid && game.challenges.Toxicity.stacks > 1415);
-
-        //force abandon army
-        if(!game.global.mapsActive && !game.global.preMapsActive) {
-            mapsClicked();
-            mapsClicked();
-        }
-
-    }
     else stackingTox = false;
-    
     //during 'watch' challenge, run maps on these levels:
     var watchmaps = [15,25,35,50];
     var shouldDoWatchMaps = false;
-    if (game.global.challengeActive == 'Watch' && watchmaps.indexOf(game.global.world) > -1 && game.global.mapBonus < 1){
-        shouldDoMaps = true;
-        shouldDoWatchMaps = true;
-    }
     if (getPageSetting('BuyBuildings')) {
     	
 	//mapYouSlow maps
@@ -2256,7 +2210,7 @@ function autoMap() {
         if (selectedMap == "world") {
             //if needPrestige, TRY to find current level map as the highest level map we own.
             if (needPrestige)
-                if (game.global.world == game.global.mapsOwnedArray[highestMap].level)
+                if (game.global.world == game.global.mapsOwnedArray[highestMap].level&&26>=game.global.mapsOwnedArray[highestMap].size)
                     selectedMap = game.global.mapsOwnedArray[highestMap].id;
                 else
                     selectedMap = "create";
@@ -2275,14 +2229,6 @@ function autoMap() {
         }
         //if selectedMap != world, it already has a map ID and will be run below            
     }
-    
-    //don't map on even worlds if on Lead, except if person is dumb and wants to void on even  
-    if(game.global.challengeActive == 'Lead' && !doVoids && (game.global.world % 2 == 0 || game.global.lastClearedCell < 59)) {
-        if(game.global.preMapsActive)
-            mapsClicked();
-        return; //exit
-    }
-    
     //Repeat Button Management (inside a map):
     if (!game.global.preMapsActive && game.global.mapsActive) {
         //Set the repeatBionics flag (farm bionics before spire), for the repeat button management code.
