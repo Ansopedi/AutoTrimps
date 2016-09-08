@@ -1697,7 +1697,6 @@ function manualLabor() {
 //Autostance - function originally created by Belaith (in 1971)
 //Automatically swap formations (stances) to avoid dying
 function autoStance() {
-	 debug('auto ' , '*rocket');
     //calculate internal script variables.
     //baseDamage
     baseDamage = game.global.soldierCurrentAttack * (1 + (game.global.achievementBonus / 100)) * ((game.global.antiStacks * game.portal.Anticipation.level * game.portal.Anticipation.modifier) + 1) * (1 + (game.global.roboTrimpLevel * 0.2));
@@ -1740,14 +1739,12 @@ function autoStance() {
              //enoughDamage = true; enoughHealth = true; shouldFarm = false;
         }
     }
-    debug('stuff ' , '*rocket');
     if (game.global.mapsActive && (getCurrentEnemy(1).name == "Jestimp" || getCurrentEnemy(1).name == "Chronoimp" ||  (hiderwindow > 0.16 && getCurrentMapObject().location != "Void"))){ setFormation(4); return;}
     if (game.global.mapsActive && (getCurrentEnemy(1).name == "Jestimp" || getCurrentEnemy(1).name == "Chronoimp" ||  (hiderwindow > 960 && getCurrentMapObject().location == "Void"))){ setFormation(4); return;}
     if (!game.global.mapsActive && (hiderwindow > 660)){ setFormation(4); return;}
     
     
     if (game.global.gridArray.length === 0){ return;}
-    debug('stance ' , '*rocket');
     setFormation(2);
     
     //baseDamage
