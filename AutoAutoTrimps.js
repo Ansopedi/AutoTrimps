@@ -2599,7 +2599,7 @@ function manageGenes() {
     //if we need to hire geneticists
     //Don't hire geneticists if total breed time remaining is greater than our target breed time
     //Don't hire geneticists if we have already reached 30 anti stacks (put off further delay to next trimp group)
-    if (targetBreed > getBreedTime() && !game.jobs.Geneticist.locked && ((game.global.lastBreedTime/1000 + getBreedTime(true) < autoTrimpSettings.GeneticistTimer.value) ) {
+    if (targetBreed > getBreedTime() && !game.jobs.Geneticist.locked && ((game.global.lastBreedTime/1000 + getBreedTime(true) < autoTrimpSettings.GeneticistTimer.value) )) {
         //insert 10% of total food limit here? or cost vs tribute?
         //if there's no free worker spots, fire a farmer
         //hire a geneticist
