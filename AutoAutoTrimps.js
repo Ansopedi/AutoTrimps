@@ -2701,7 +2701,6 @@ function autoGoldenUpgrades() {
 
 //Handles manual fighting automatically, in a different way.
 function betterAutoFight() {
-	fightManual();
     //Manually fight instead of using builtin auto-fight
     if (game.global.autoBattle) {
         if (!game.global.pauseFight) {
