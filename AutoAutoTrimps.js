@@ -2619,10 +2619,8 @@ function manageGenes() {
     if (targetBreed > getBreedTime() && !game.jobs.Geneticist.locked && targetBreed > getBreedTime(true) && ((game.global.lastBreedTime/1000 + getBreedTime(true) < autoTrimpSettings.GeneticistTimer.value) || (targetBreed > getBreedTime() && getBreedTime(true) == 0)) && game.resources.trimps.soldiers > 0 && (inDamageStance || inScryerStance) && !breedFire) {
         //insert 10% of total food limit here? or cost vs tribute?
         //if there's no free worker spots, fire a farmer
-        if (fWorkers < 1 && canAffordJob('Geneticist', false)) {
-            safeBuyJob('Farmer', -1);
-        }
         //hire a geneticist
+        safeBuyJob('Farmer', -1);
         safeBuyJob('Geneticist');
     }
     //if we need to speed up our breeding
