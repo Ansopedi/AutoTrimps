@@ -2591,7 +2591,8 @@ function doPortal(challenge) {
 //Controls "Manage Breed Timer" and "Genetecist Timer" - adjust geneticists to reach desired breed timer
 function manageGenes() {
     var fWorkers = Math.ceil(game.resources.trimps.realMax() / 2) - game.resources.trimps.employed;
-    if(getPageSetting('ManageBreedtimer')) {
+    //TODO
+    if(true) {
         if(game.options.menu.showFullBreed.enabled != 1) toggleSetting("showFullBreed");
         
         if(game.portal.Anticipation.level == 0) autoTrimpSettings.GeneticistTimer.value = '0';
