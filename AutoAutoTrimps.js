@@ -1741,9 +1741,9 @@ function autoStance() {
         }
     }
     debug('stuff ' , '*rocket');
-    if (game.global.mapsActive && (getCurrentEnemy(1).name == "Jestimp" || getCurrentEnemy(1).name == "Chronoimp" ||  (hiderwindow > 0.16 && getCurrentMapObject().location != "Void"))) setFormation(4); return;
-    if (game.global.mapsActive && (getCurrentEnemy(1).name == "Jestimp" || getCurrentEnemy(1).name == "Chronoimp" ||  (hiderwindow > 960 && getCurrentMapObject().location == "Void"))) setFormation(4); return;
-    if (!game.global.mapsActive && (hiderwindow > 660)) setFormation(4); return;
+    if (game.global.mapsActive && (getCurrentEnemy(1).name == "Jestimp" || getCurrentEnemy(1).name == "Chronoimp" ||  (hiderwindow > 0.16 && getCurrentMapObject().location != "Void"))){ setFormation(4); return;}
+    if (game.global.mapsActive && (getCurrentEnemy(1).name == "Jestimp" || getCurrentEnemy(1).name == "Chronoimp" ||  (hiderwindow > 960 && getCurrentMapObject().location == "Void"))){ setFormation(4); return;}
+    if (!game.global.mapsActive && (hiderwindow > 660)){ setFormation(4); return;}
     
     
     if (game.global.gridArray.length === 0){ return;}
