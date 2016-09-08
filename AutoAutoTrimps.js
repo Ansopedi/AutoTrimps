@@ -2888,6 +2888,7 @@ function delayStartAgain(){
 
 var OVKcellsWorld = 0;
 function mainLoop() {
+    mapYouSlow = false;
     stopScientistsatFarmers = 250000;   //put this here so it reverts every cycle (in case we portal out of watch challenge)
     game.global.addonUser = true;
     game.global.autotrimps = {
