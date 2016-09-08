@@ -2209,7 +2209,7 @@ function autoMap() {
         //selectedMap = world here if we haven't set it to create yet, meaning we found appropriate high level map, or siphon map
         if (selectedMap == "world") {
             //if needPrestige, TRY to find current level map as the highest level map we own.
-            if (needPrestige)
+            if (needPrestige||mapYouSlow )
                 if (game.global.world == game.global.mapsOwnedArray[highestMap].level&&26>=game.global.mapsOwnedArray[highestMap].size)
                     selectedMap = game.global.mapsOwnedArray[highestMap].id;
                 else
