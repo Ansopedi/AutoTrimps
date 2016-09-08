@@ -1744,12 +1744,12 @@ function autoStance() {
     {
  -    	setFormation(4);
 	return;
- -    }
+ -  }
     if (game.global.mapsActive && (getCurrentEnemy(1).name == "Jestimp" || getCurrentEnemy(1).name == "Chronoimp" ||  (hiderwindow > 20 && getCurrentMapObject().location == "Void"))) 
     {
  -    	setFormation(4);
 	return;
- -    }
+ -  }
     if (!game.global.mapsActive && (hiderwindow > 20)) 
     {
     	setFormation(4);
