@@ -2074,13 +2074,9 @@ function autoMap() {
         }
         //levels of new Giga
         var stationLevel = [61,62,63,64,65,66,67,68,69,70,72,74,76,78,81,84,87,90,95,100,105,110,115,120,125,130,135,140,145,150,155,160,165,170,175,180,190,200,210,220,230,240,250,260,270,280,290,300];
-        if (		
-        (game.global.mapBonus < 1 && game.global.world >= 11 && OVKcellsWorld+1 < game.global.lastClearedCell/2) ||	//enter map in zones if you miss to overkill, the script will make sure you farm more if you can't overkill in the map.
-        (game.global.world >= 15 && game.global.mapsActive && game.global.mapBonus < 9 && ((new Date().getTime() - game.global.mapStarted) > (cellClearTime * game.global.mapGridArray.length))) ||	//force to stay in mapYouSlow if you overkill all the cells unless you are about to hit max map bonus.
-        (game.global.world >= 62 && !!game.buildings.Nursery.locked) ||	//Clear maps to stack up nurseries for genetics before starting warps stucking.
-        //(!game.upgrades.Gigastation.locked && game.global.mapBonus < 1 && !game.global.mapsActive && (game.upgrades.Gigastation.allowed-4 >= game.upgrades.Gigastation.done)) ||	//Clear maps to stack up early warps.
+        if (
         ((game.global.mapBonus < 10 && hiderwindow < 0.0269 ) || (game.global.mapBonus < 9 && hiderwindow < 0.0289 ) || (game.global.mapBonus < 8 && hiderwindow < 0.0319 ) || (game.global.mapBonus < 7 && hiderwindow < 0.0349 ) || (game.global.mapBonus < 6 && hiderwindow < 0.0499 ) || (game.global.mapBonus < 5 && hiderwindow < 0.0559 ) || (game.global.mapBonus < 4 && hiderwindow < 0.1789 ) || (game.global.mapBonus < 3 && hiderwindow < 0.3089 ) || (game.global.mapBonus < 2 && hiderwindow < 0.3769 ) || (game.global.mapBonus < 1 && hiderwindow < 0.461 )) ||	//Farm maps if you are way to slow
-        ((game.global.preMapsActive || game.global.mapsActive) && (getBreedTime(true) > 5 || game.global.antiStacks < 30) && hiderwindow < 3)
+        ((game.global.preMapsActive || game.global.mapsActive) && (getBreedTime(true) > 5 || game.global.antiStacks < 30) && hiderwindow < 3))
         //(game.global.mapsActive && getBreedTime(true) > 0 && hiderwindow < 1)	//Stay in maps to heal
         //(game.global.world >= 310 && ((new Date().getTime() - game.global.zoneStarted) / 1000 / 60) < 10)	//option to force stay in zone X time in min/cleared maps and farm
         //(game.global.world == 200 && game.global.lastClearedCell > 20 && ((new Date().getTime() - game.global.zoneStarted) / 1000 / 60) < 10)		//option to force stay in zone X time in min and farm		
