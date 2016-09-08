@@ -2269,7 +2269,7 @@ function autoMap() {
             if(
                 game.global.switchToMaps 
                 && 
-                (needPrestige || doVoids || (game.global.challengeActive == 'Lead' && game.global.world % 2 == 1)) 
+                (mapYouSlow || needPrestige || doVoids || (game.global.challengeActive == 'Lead' && game.global.world % 2 == 1)) 
                 && 
                     (
                     (game.resources.trimps.realMax() <= game.resources.trimps.owned + 1)
@@ -2289,7 +2289,7 @@ function autoMap() {
             mapsClicked();  //go back
         } 
         else if (selectedMap == "create") {
-            if (needPrestige)
+            if (mapYouSlow ||needPrestige)
                 document.getElementById("mapLevelInput").value = game.global.world;
             else
                 document.getElementById("mapLevelInput").value = siphlvl;
