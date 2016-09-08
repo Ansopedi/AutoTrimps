@@ -2591,28 +2591,11 @@ function doPortal(challenge) {
 //Controls "Manage Breed Timer" and "Genetecist Timer" - adjust geneticists to reach desired breed timer
 function manageGenes() {
     var fWorkers = Math.ceil(game.resources.trimps.realMax() / 2) - game.resources.trimps.employed;
-    //TODO
-    if(true) {
-        if(game.options.menu.showFullBreed.enabled != 1) toggleSetting("showFullBreed");
-        
-        if(game.portal.Anticipation.level == 0) autoTrimpSettings.GeneticistTimer.value = '0';
-        else if(game.global.challengeActive == 'Electricity' || game.global.challengeActive == 'Mapocalypse') autoTrimpSettings.GeneticistTimer.value = '3.5';
-        else if(game.global.challengeActive == 'Nom' || game.global.challengeActive == 'Toxicity') {
-            
-            if(getPageSetting('FarmWhenNomStacks7') && game.global.gridArray[99].nomStacks >= 5 && !game.global.mapsActive) {
-                //if Improbability already has 5 nomstacks, do 30 antistacks.
-                autoTrimpSettings.GeneticistTimer.value = '30';
-                //actually buy them here because we can't wait.
-                safeBuyJob('Geneticist',1+(autoTrimpSettings.GeneticistTimer.value - getBreedTime())*2);
-            }
-            else
-                autoTrimpSettings.GeneticistTimer.value = '10';
-        }
-        else autoTrimpSettings.GeneticistTimer.value = '30';
-    }
+    autoTrimpSettings.GeneticistTimer.value = '30';
     var inDamageStance = game.upgrades.Dominance.done ? game.global.formation == 2 : game.global.formation == 0;
     var inScryerStance = (game.global.world >= 60 && game.global.highestLevelCleared >= 180) && game.global.formation == 4;
-    var targetBreed = (game.resources.trimps.realMax()*0.003 < game.resources.trimps.soldiers) ? parseInt(getPageSetting('GeneticistTimer')) : 0.01 ;
+    var targetBreed = (game.resources.trimps.realMax()*0.003 < game.resources.trimps.soldiers) ? parseInt(getPageSetting('GeneticistTimer')) : 30 ;
+    breedFire = true;
     //if we need to hire geneticists
     //Don't hire geneticists if total breed time remaining is greater than our target breed time
     //Don't hire geneticists if we have already reached 30 anti stacks (put off further delay to next trimp group)
