@@ -2535,19 +2535,37 @@ function doPortal(challenge) {
 //Controls "Manage Breed Timer" and "Genetecist Timer" - adjust geneticists to reach desired breed timer
 function manageGenes() {
     var fWorkers = Math.ceil(game.resources.trimps.realMax() / 2) - game.resources.trimps.employed;
-    autoTrimpSettings.GeneticistTimer.value = '30';
+    if(getPageSetting('ManageBreedtimer')) {
+        if(game.options.menu.showFullBreed.enabled != 1) toggleSetting("showFullBreed");
+        
+        if(game.portal.Anticipation.level == 0) autoTrimpSettings.GeneticistTimer.value = '0';
+        else if(game.global.challengeActive == 'Electricity' || game.global.challengeActive == 'Mapocalypse') autoTrimpSettings.GeneticistTimer.value = '3.5';
+        else if(game.global.challengeActive == 'Nom' || game.global.challengeActive == 'Toxicity') {
+            
+            if(getPageSetting('FarmWhenNomStacks7') && game.global.gridArray[99].nomStacks >= 5 && !game.global.mapsActive) {
+                //if Improbability already has 5 nomstacks, do 30 antistacks.
+                autoTrimpSettings.GeneticistTimer.value = '30';
+                //actually buy them here because we can't wait.
+                safeBuyJob('Geneticist',1+(autoTrimpSettings.GeneticistTimer.value - getBreedTime())*2);
+            }
+            else
+                autoTrimpSettings.GeneticistTimer.value = '10';
+        }
+        else autoTrimpSettings.GeneticistTimer.value = '30';
+    }
     var inDamageStance = game.upgrades.Dominance.done ? game.global.formation == 2 : game.global.formation == 0;
     var inScryerStance = (game.global.world >= 60 && game.global.highestLevelCleared >= 180) && game.global.formation == 4;
-    var targetBreed = (game.resources.trimps.realMax()*0.003 < game.resources.trimps.soldiers) ? parseInt(getPageSetting('GeneticistTimer')) : 30 ;
-    breedFire = true;
+    var targetBreed = parseInt(getPageSetting('GeneticistTimer'));
     //if we need to hire geneticists
     //Don't hire geneticists if total breed time remaining is greater than our target breed time
     //Don't hire geneticists if we have already reached 30 anti stacks (put off further delay to next trimp group)
-    if (targetBreed > getBreedTime() && !game.jobs.Geneticist.locked && ((game.global.lastBreedTime/1000 + getBreedTime(true) < autoTrimpSettings.GeneticistTimer.value) )) {
+    if (targetBreed > getBreedTime() && !game.jobs.Geneticist.locked && targetBreed > getBreedTime(true) && (game.global.lastBreedTime/1000 + getBreedTime(true) < autoTrimpSettings.GeneticistTimer.value) && game.resources.trimps.soldiers > 0 && (inDamageStance||inScryerStance) && !breedFire) {
         //insert 10% of total food limit here? or cost vs tribute?
         //if there's no free worker spots, fire a farmer
+        if (fWorkers < 1 && canAffordJob('Geneticist', false)) {
+            safeBuyJob('Farmer', -1);
+        }
         //hire a geneticist
-        safeBuyJob('Farmer', -1);
         safeBuyJob('Geneticist');
     }
     //if we need to speed up our breeding
@@ -2555,24 +2573,32 @@ function manageGenes() {
     if ((targetBreed < getBreedTime() || !game.jobs.Geneticist.locked || !getPageSetting('ManageBreedtimer') || game.global.challengeActive == 'Watch') && game.upgrades.Potency.allowed > game.upgrades.Potency.done && canAffordTwoLevel('Potency') && getPageSetting('BuyUpgrades')) {
         buyUpgrade('Potency');
     }
-    //otherwise, if we have some geneticists, start firing them
-     else if ((targetBreed*1.02 < getBreedTime() || targetBreed*1.02 < getBreedTime(true)) && !game.jobs.Geneticist.locked && game.jobs.Geneticist.owned > 10 && getBreedTime(true) > 2) {
-         safeBuyJob('Geneticist', -10);
-         //debug('fired a geneticist');
-         
-     }
+        //otherwise, if we have some geneticists, start firing them
+    else if ((targetBreed*1.02 < getBreedTime() || targetBreed*1.02 < getBreedTime(true)) && !game.jobs.Geneticist.locked && game.jobs.Geneticist.owned > 10) {
+        safeBuyJob('Geneticist', -10);
+        //debug('fired a geneticist');
+        
+    }
         //if our time remaining to full trimps is still too high, fire some jobs to get-er-done
         //needs option to toggle? advanced options?
     else if ((targetBreed < getBreedTime(true) || (game.resources.trimps.soldiers == 0 && getBreedTime(true) > 6)) && breedFire == false && getPageSetting('BreedFire') && game.global.world > 10) {
         breedFire = true;
     }
+
     //reset breedFire once we have less than 2 seconds remaining
     if(getBreedTime(true) < 2) breedFire = false;
-    //force deth if max antiStacks is available
-    if (game.global.antiStacks < 30 && getBreedTime() >= 30 && getBreedTime(true) == 0 && game.resources.trimps.soldiers > 0 && (!game.global.preMapsActive && ((game.global.mapsActive && getCurrentMapObject().location != "Void") || (game.global.lastClearedMapCell < 10 || !game.global.mapsActive)))) {
-    mapsClicked(true); mapsClicked(true);
+    
+    //if a new fight group is available and anticipation stacks aren't 30, abandon and grab a new group
+    var newSquadRdy = game.resources.trimps.realMax() <= game.resources.trimps.owned + 1;
+    if (game.portal.Anticipation.level && game.global.antiStacks < targetBreed && getBreedTime() >= targetBreed && getBreedTime(true) == 0 && (game.global.lastBreedTime/1000) >= targetBreed && newSquadRdy && game.resources.trimps.soldiers > 0) {
+        if (!game.global.preMapsActive) {
+            mapsClicked(); 
+            //force abandon army
+            if (game.global.switchToMaps)
+                mapsClicked();
+            console.log("Killed you! (to get to 30 anti stacks). Autohomicide successful.");
+        }
     }
-
 }
 
 //Change prestiges as we go (original idea thanks to Hider)
