@@ -1744,11 +1744,13 @@ function autoStance() {
     if (game.global.mapsActive && (getCurrentEnemy(1).name == "Jestimp" || getCurrentEnemy(1).name == "Chronoimp" ||  (hiderwindow > 0.16 && getCurrentMapObject().location != "Void"))) setFormation(4); return;
     if (game.global.mapsActive && (getCurrentEnemy(1).name == "Jestimp" || getCurrentEnemy(1).name == "Chronoimp" ||  (hiderwindow > 960 && getCurrentMapObject().location == "Void"))) setFormation(4); return;
     if (!game.global.mapsActive && (hiderwindow > 660)) setFormation(4); return;
-    setFormation(2);
+    
+    
     if (game.global.gridArray.length === 0) return;
     
     //baseDamage
     baseDamage = game.global.soldierCurrentAttack * (1 + (game.global.achievementBonus / 100)) * ((game.global.antiStacks * game.portal.Anticipation.level * game.portal.Anticipation.modifier) + 1) * (1 + (game.global.roboTrimpLevel * 0.2));
+    setFormation(2);
     	if (game.global.formation == 0) {
     		baseDamage *= 2;
     	} else if (game.global.formation != "2") {
