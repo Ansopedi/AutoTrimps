@@ -2281,7 +2281,7 @@ function autoMap() {
             }
         }
         //forcibly run watch maps
-        if (shouldDoWatchMaps || (getBreedTime(true) < 10 && mapYouSlow)) {
+        if (shouldDoWatchMaps || (game.global.lastBreedTime >= 30000 && mapYouSlow)) {
             mapsClicked();
         }
     } else if (game.global.preMapsActive) {
