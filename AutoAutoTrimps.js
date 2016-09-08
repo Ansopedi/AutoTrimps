@@ -1697,7 +1697,7 @@ function manualLabor() {
 //Autostance - function originally created by Belaith (in 1971)
 //Automatically swap formations (stances) to avoid dying
 function autoStance() {
-	
+	 debug('auto ' , '*rocket');
     //calculate internal script variables.
     //baseDamage
     baseDamage = game.global.soldierCurrentAttack * (1 + (game.global.achievementBonus / 100)) * ((game.global.antiStacks * game.portal.Anticipation.level * game.portal.Anticipation.modifier) + 1) * (1 + (game.global.roboTrimpLevel * 0.2));
@@ -1747,6 +1747,7 @@ function autoStance() {
     
     
     if (game.global.gridArray.length === 0){ return;}
+    debug('stance ' , '*rocket');
     setFormation(2);
     
     //baseDamage
