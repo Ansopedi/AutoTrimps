@@ -2098,6 +2098,7 @@ function autoMap() {
     }
 
     var shouldDoSpireMaps = false;
+    var needFarmSpire = (((new Date().getTime() - game.global.zoneStarted) / 1000 / 60) < getPageSetting('MinutestoFarmBeforeSpire')) && game.global.mapBonus == 10;
     //Farm X Minutes Before Spire:
     //Dynamic Siphonology section (when necessary)
     var siphlvl = game.global.world - game.portal.Siphonology.level;
