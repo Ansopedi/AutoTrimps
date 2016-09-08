@@ -2592,7 +2592,7 @@ function doPortal(challenge) {
 function manageGenes() {
     var fWorkers = Math.ceil(game.resources.trimps.realMax() / 2) - game.resources.trimps.employed;
     //TODO
-    if(true) {
+    if(false) {
         if(game.options.menu.showFullBreed.enabled != 1) toggleSetting("showFullBreed");
         
         if(game.portal.Anticipation.level == 0) autoTrimpSettings.GeneticistTimer.value = '0';
@@ -2629,12 +2629,6 @@ function manageGenes() {
     //if we have potency upgrades available, buy them. If geneticists are unlocked, or we aren't managing the breed timer, just buy them
     if ((targetBreed < getBreedTime() || !game.jobs.Geneticist.locked || !getPageSetting('ManageBreedtimer') || game.global.challengeActive == 'Watch') && game.upgrades.Potency.allowed > game.upgrades.Potency.done && canAffordTwoLevel('Potency') && getPageSetting('BuyUpgrades')) {
         buyUpgrade('Potency');
-    }
-        //otherwise, if we have some geneticists, start firing them
-    else if ((targetBreed*1.02 < getBreedTime() || targetBreed*1.02 < getBreedTime(true)) && !game.jobs.Geneticist.locked && game.jobs.Geneticist.owned > 10 && getBreedTime(true) > 2) {
-        safeBuyJob('Geneticist', -10);
-        //debug('fired a geneticist');
-        
     }
         //if our time remaining to full trimps is still too high, fire some jobs to get-er-done
         //needs option to toggle? advanced options?
