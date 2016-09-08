@@ -2235,7 +2235,7 @@ function autoMap() {
         var repeatBionics = getPageSetting('RunBionicBeforeSpire') && game.global.bionicOwned >= 5;
         //if we are doing the right map, and it's not a norecycle (unique) map, and we aren't going to hit max map bonus
         //or repeatbionics is true and there are still prestige items available to get
-        if (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (game.global.mapBonus < 9 || shouldFarm || stackingTox || needPrestige| || shouldDoSpireMaps)) || (repeatBionics && addSpecials(true, true, getCurrentMapObject()) > 0)) {
+        if (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (game.global.mapBonus < 9 || shouldFarm || stackingTox || needPrestige || shouldDoSpireMaps)) || (repeatBionics && addSpecials(true, true, getCurrentMapObject()) > 0)) {
             var targetPrestige = autoTrimpSettings.Prestige.selected;
             //make sure repeat map is on
             if (!game.global.repeatMap) {
