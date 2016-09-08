@@ -1060,9 +1060,9 @@ function highlightHousing() {
                     if (game.buildings.Warpstation.owned >= (Math.floor(game.upgrades.Gigastation.done * getPageSetting('DeltaGigastation')) + getPageSetting('FirstGigastation')))
                         bestBuilding = null;
                 }
-                if (hiderwindow < 3 || getPageSetting('WarpstationWall') && bestBuilding == "Warpstation") {
+                if (hiderwindow < 0.6 || getPageSetting('WarpstationWall') && bestBuilding == "Warpstation") {
                     //Warpstation Wall - allow only warps that cost 1/n'th less then current metal (try to save metal for next prestige) 
-                    var costratio = 5;  //(1/4th)                    
+                    var costratio = 10;  //(1/4th)                    
                     if (getBuildingItemPrice(game.buildings.Warpstation, "metal", false, 1) * Math.pow(1 - game.portal.Resourceful.modifier, game.portal.Resourceful.level) > game.resources.metal.owned/costratio)
                         bestBuilding = null;
                 }
@@ -1731,13 +1731,13 @@ function autoStance() {
         var ovkldmg = avgDamage;
         //are we going to overkill in S?
         ovklHDratio = ovkldmg/(getEnemyMaxHealth(game.global.world,1,true));
-        hiderwindow = ovklHDratio*50;
+        hiderwindow = ovklHDratio;
         Area51i = ovkldmg;
         Area60i = getEnemyMaxHealth(game.global.world,1,true);
         armorValue = ((baseHealth/8)/(getEnemyMaxAttack(game.global.world, 95, 'Snimp',0)*getCorruptScale("attack")));
         armorTempValue = (game.global.soldierHealth/(getEnemyMaxAttack(game.global.world, 95, 'Snimp',0)*getCorruptScale("attack")));
-        if (hiderwindow > 50) { // && game.global.world < getPageSetting('VoidMaps')
-            hiderwindow = 50; //enoughDamage = true; enoughHealth = true; shouldFarm = false;
+        if (hiderwindow > 120) { // && game.global.world < getPageSetting('VoidMaps')
+             //enoughDamage = true; enoughHealth = true; shouldFarm = false;
         }
     }
     if (game.global.mapsActive && (getCurrentEnemy(1).name == "Jestimp" || getCurrentEnemy(1).name == "Chronoimp" ||  (hiderwindow > 0.2 && getCurrentMapObject().location != "Void"))) {
@@ -1962,10 +1962,6 @@ function autoMap() {
     if (game.global.challengeActive == "Mapology" && game.challenges.Mapology.credits < 1) return;
     //FIND VOID MAPS LEVEL:
     var voidMapLevelSetting = getPageSetting('VoidMaps');
-    if (hiderwindow > 3 && game.global.world > 300)
-    	voidMapLevelSetting = 99404; // Stop trolling me Ânsopedi!!!!
-    if (game.global.mapBonus > 1 && game.global.preMapsActive && hiderwindow < 3 && (getPageSetting('VoidMaps') > game.global.world || hiderwindow > 1) && game.global.challengeActive != "Toxicity" && (game.global.challengeActive != "Lead" || game.global.world % 2 == 1))
-        voidMapLevelSetting = game.global.world;
     //decimal void maps are possible, using string function to avoid false float precision (0.29999999992). javascript can compare ints to strings anyway.
     var voidMapLevelSettingZone = (voidMapLevelSetting+"").split(".")[0];
     var voidMapLevelSettingMap = (voidMapLevelSetting+"").split(".")[1];
@@ -1977,7 +1973,7 @@ function autoMap() {
                                 ((game.global.world == voidMapLevelSettingZone && !getPageSetting('RunNewVoids')) 
                                                                 || 
                                  (game.global.world >= voidMapLevelSettingZone && getPageSetting('RunNewVoids')))
-                         && ((voidsuntil != -1 && game.global.world <= voidsuntil) || (hiderwindow > 1) || (voidsuntil == -1) || !getPageSetting('RunNewVoids'));
+                         && ((voidsuntil != -1 && game.global.world <= voidsuntil) || (voidsuntil == -1) || !getPageSetting('RunNewVoids'));
     if(game.global.totalVoidMaps == 0 || !needToVoid)
         doVoids = false;
     //calculate if we are behind on prestiges
@@ -2086,7 +2082,7 @@ function autoMap() {
         (game.global.world >= 15 && game.global.mapsActive && game.global.mapBonus < 9 && ((new Date().getTime() - game.global.mapStarted) > (cellClearTime * game.global.mapGridArray.length))) ||	//force to stay in mapYouSlow if you overkill all the cells unless you are about to hit max map bonus.
         (game.global.world >= 62 && !!game.buildings.Nursery.locked) ||	//Clear maps to stack up nurseries for genetics before starting warps stucking.
         //(!game.upgrades.Gigastation.locked && game.global.mapBonus < 1 && !game.global.mapsActive && (game.upgrades.Gigastation.allowed-4 >= game.upgrades.Gigastation.done)) ||	//Clear maps to stack up early warps.
-        ((game.global.mapBonus < 9 && hiderwindow < 0.5 ) || (game.global.mapBonus < 8 && hiderwindow < 0.6 ) || (game.global.mapBonus < 7 && hiderwindow < 0.7 ) || (game.global.mapBonus < 6 && hiderwindow < 0.8 ) || (game.global.mapBonus < 5 && hiderwindow < 0.9 ) || (game.global.mapBonus < 4 && hiderwindow < 1 ) || (game.global.mapBonus < 3 && hiderwindow < 1.1 ) || (game.global.mapBonus < 2 && hiderwindow < 1.2 ) || (game.global.mapBonus < 1 && hiderwindow < 1.3 )) ||	//Farm maps if you are way to slow
+        ((game.global.mapBonus < 10 && hiderwindow < 0.0269 ) || (game.global.mapBonus < 9 && hiderwindow < 0.0289 ) || (game.global.mapBonus < 8 && hiderwindow < 0.0319 ) || (game.global.mapBonus < 7 && hiderwindow < 0.0349 ) || (game.global.mapBonus < 6 && hiderwindow < 0.0499 ) || (game.global.mapBonus < 5 && hiderwindow < 0.0559 ) || (game.global.mapBonus < 4 && hiderwindow < 0.1789 ) || (game.global.mapBonus < 3 && hiderwindow < 0.3089 ) || (game.global.mapBonus < 2 && hiderwindow < 0.3769 ) || (game.global.mapBonus < 1 && hiderwindow < 0.461 )) ||	//Farm maps if you are way to slow
         ((game.global.preMapsActive || game.global.mapsActive) && (getBreedTime(true) > 5 || game.global.antiStacks < 30) && hiderwindow < 3)
         //(game.global.mapsActive && getBreedTime(true) > 0 && hiderwindow < 1)	//Stay in maps to heal
         //(game.global.world >= 310 && ((new Date().getTime() - game.global.zoneStarted) / 1000 / 60) < 10)	//option to force stay in zone X time in min/cleared maps and farm
@@ -2102,21 +2098,7 @@ function autoMap() {
     }
 
     var shouldDoSpireMaps = false;
-    //Get 200% map bonus before attempting Spire
-    if(getPageSetting('CustomAutoPortal') < 335 && game.global.world == 200 && game.global.mapBonus < 9 ) {
-        shouldDoMaps = true;
-        shouldDoSpireMaps = true;
-    } else if (game.global.world == 200 && game.global.mapBonus < 2) {
-        shouldDoMaps = true;
-        shouldDoSpireMaps = true;
-    }
     //Farm X Minutes Before Spire:
-    var needFarmSpire = (((new Date().getTime() - game.global.zoneStarted) / 1000 / 60) < getPageSetting('MinutestoFarmBeforeSpire')) && game.global.mapBonus == 10;
-    if (game.global.world == 200 && game.global.spireActive && needFarmSpire) {
-        shouldDoMaps = true;
-        shouldDoSpireMaps = true;
-    }
-
     //Dynamic Siphonology section (when necessary)
     var siphlvl = game.global.world - game.portal.Siphonology.level;
     var maxlvl = game.talents.mapLoot.purchased ? game.global.world - 1 : game.global.world;
@@ -2516,7 +2498,7 @@ function autoPortal() {
                     var bestHeHr = game.stats.bestHeliumHourThisRun.storedValue;
                     var myHeliumHr = game.stats.heliumHour.value();
                     var heliumHrBuffer = Math.abs(getPageSetting('HeliumHrBuffer'));
-                    if(myHeliumHr < bestHeHr * (1-(heliumHrBuffer/100)) && !game.global.challengeActive && (game.global.totalVoidMaps == 0 || hiderwindow < 0.2) && (getPageSetting('VoidMaps')+4 < game.global.world || hiderwindow < 0.2)) {
+                    if(myHeliumHr < bestHeHr * (1-(heliumHrBuffer/100)) && !game.global.challengeActive && (hiderwindow < 0.1) ) {
                         debug("My Helium was: " + myHeliumHr + " & the Best Helium was: " + bestHeHr + " at zone: " +  game.stats.bestHeliumHourThisRun.atZone);
                         pushData();
                         if(autoTrimpSettings.HeliumHourChallenge.selected != 'None')
@@ -2829,22 +2811,22 @@ function useScryerStance() {
         var ovkldmg = avgDamage;
         //are we going to overkill in S?
         ovklHDratio = ovkldmg/(getEnemyMaxHealth(game.global.world,1,true));
-        hiderwindow = ovklHDratio*50;
+        hiderwindow = ovklHDratio;
         Area51i = ovkldmg;
         Area60i = getEnemyMaxHealth(game.global.world,1,true);
         armorValue = ((baseHealth/8)/(getEnemyMaxAttack(game.global.world, 95, 'Snimp',0)*getCorruptScale("attack")));
         armorTempValue = (game.global.soldierHealth/(getEnemyMaxAttack(game.global.world, 95, 'Snimp',0)*getCorruptScale("attack")));
-        if (hiderwindow > 50) { // && game.global.world < getPageSetting('VoidMaps')
-            hiderwindow = 50; //enoughDamage = true; enoughHealth = true; shouldFarm = false;
+        if (hiderwindow > 120) { // && game.global.world < getPageSetting('VoidMaps')
+             //enoughDamage = true; enoughHealth = true; shouldFarm = false;
         }
     //quit here if its right
     }
     if (game.global.preMapsActive || (!game.global.preMapsActive && game.global.mapsActive && getCurrentMapObject().location == "Void") || hiderwindow < 20 || HDratio > 7 || (game.global.spireActive && game.global.lastClearedCell > 77) || game.global.gridArray.length === 0 || game.global.highestLevelCleared < 180 || (hiderwindow < 20 && game.global.lastClearedCell == 98)) { autoStance(); return;
     }
-    if (ovklHDratio > 0.9) {
-        setFormation(4);
-        return;
-    }
+    //if (ovklHDratio > 0.9) {
+      //  setFormation(4);
+        //return;
+    //}
 
     //grab settings variables
     var useinmaps = getPageSetting('ScryerUseinMaps');
@@ -2869,7 +2851,7 @@ function useScryerStance() {
         var spirecheck = (game.global.world == 200 && game.global.spireActive);
         run = spirecheck ? useinspire : run;
     }
-    if ((!game.global.mapsActive && !game.global.preMapsActive && game.global.gridArray.length > 0 && ((hiderwindow > 20 && game.global.lastClearedCell == 98) || game.global.lastClearedCell < 98)) && ((!getCurrentEnemy(1).corrupted && hiderwindow > 20) ||
+    if ((!game.global.mapsActive && !game.global.preMapsActive && game.global.gridArray.length > 0 && ((hiderwindow == 20 && game.global.lastClearedCell == 98) || game.global.lastClearedCell < 98)) && ((!getCurrentEnemy(1).corrupted && hiderwindow > 20) ||
     	(!getCurrentEnemy(2).corrupted && 4*baseDamage*getPlayerCritDamageMult() > getCurrentEnemy().health/2 && hiderwindow > 20))) {
     	setFormation(4);
     	return;
@@ -3155,7 +3137,7 @@ var hiderWindow = document.getElementById('hiderWindow');
 function updateValueFields2() {
     var hiderWindow = document.getElementById('hiderWindow');
     var hiderStatus = document.getElementById('hiderStatus');
-    hiderStatus.innerHTML = (5*hiderwindow).toFixed(2) + '% O.K.'; 
+    hiderStatus.innerHTML = (hiderwindow).toFixed(3) + ' factor'; 
 }
 
 var Area51i = 0;
