@@ -1943,8 +1943,8 @@ function autoMap() {
     if(autoTrimpSettings.Prestige.selected != "Off" && game.options.menu.mapLoot.enabled != 1) toggleSetting('mapLoot');
     //if player has selected arbalest or gambeson but doesn't have them unlocked, just unselect it for them! It's magic!
     if(document.getElementById('Prestige').selectedIndex > 11 && game.global.slowDone == false) {
-        document.getElementById('Prestige').selectedIndex = 11;
-        autoTrimpSettings.Prestige.selected = "Bestplate";
+       // document.getElementById('Prestige').selectedIndex = 11;
+        //autoTrimpSettings.Prestige.selected = "Bestplate";
     }    
     //Control in-map right-side-buttons for people who can't control themselves. If you wish to use these buttons manually, turn off autoMaps temporarily.
     if(game.options.menu.repeatUntil.enabled == 2) toggleSetting('repeatUntil');
@@ -2888,7 +2888,6 @@ function delayStartAgain(){
 
 var OVKcellsWorld = 0;
 function mainLoop() {
-    mapYouSlow = false;
     stopScientistsatFarmers = 250000;   //put this here so it reverts every cycle (in case we portal out of watch challenge)
     game.global.addonUser = true;
     game.global.autotrimps = {
