@@ -1740,6 +1740,7 @@ function autoStance() {
              //enoughDamage = true; enoughHealth = true; shouldFarm = false;
         }
     }
+    setFormation(2);
     if (game.global.mapsActive && (getCurrentEnemy(1).name == "Jestimp" || getCurrentEnemy(1).name == "Chronoimp" ||  (hiderwindow > 0.16 && getCurrentMapObject().location != "Void"))) setFormation(4); return;
     if (game.global.mapsActive && (getCurrentEnemy(1).name == "Jestimp" || getCurrentEnemy(1).name == "Chronoimp" ||  (hiderwindow > 960 && getCurrentMapObject().location == "Void"))) setFormation(4); return;
     if (!game.global.mapsActive && (hiderwindow > 660)) setFormation(4); return;
@@ -2828,6 +2829,7 @@ function useScryerStance() {
         var spirecheck = (game.global.world == 200 && game.global.spireActive);
         run = spirecheck ? useinspire : run;
     }
+    setFormation(2);
     if ((!game.global.mapsActive && !game.global.preMapsActive && game.global.gridArray.length > 0 && ((hiderwindow == 20 && game.global.lastClearedCell == 98) || game.global.lastClearedCell < 98)) && ((!getCurrentEnemy(1).corrupted && hiderwindow > 20) ||
     	(!getCurrentEnemy(2).corrupted && 4*baseDamage*getPlayerCritDamageMult() > getCurrentEnemy().health/2 && hiderwindow > 20))) {
     	setFormation(4);
