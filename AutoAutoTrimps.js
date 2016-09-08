@@ -2736,7 +2736,7 @@ function betterAutoFight() {
     //Manually fight instead of using builtin auto-fight
     if (game.global.autoBattle) {
         if (!game.global.pauseFight) {
-            pauseFight(); //Disable autofight
+            //pauseFight(); //Disable autofight
         }
     }
     lowLevelFight = game.resources.trimps.maxSoldiers < (game.resources.trimps.owned - game.resources.trimps.employed) * 0.5 && (game.resources.trimps.owned - game.resources.trimps.employed) > game.resources.trimps.realMax() * 0.1 && game.global.world < 5 && game.global.sLevel > 0;
