@@ -1054,13 +1054,10 @@ function highlightHousing() {
             if (max === false) max = -1;
             if (game.buildings[keysSorted[best]].owned < max || max == -1) {
                 bestBuilding = keysSorted[best];
-                
-                if (getPageSetting('WarpstationCap') && bestBuilding == "Warpstation") {
-                    //Warpstation Cap - if we are past the basewarp+deltagiga level, "cap" and just wait for next giga.
                     if (game.buildings.Warpstation.owned >= (Math.floor(game.upgrades.Gigastation.done * getPageSetting('DeltaGigastation')) + getPageSetting('FirstGigastation')))
                         bestBuilding = null;
-                }
-                if (hiderwindow < 5.0 || getPageSetting('WarpstationWall') && bestBuilding == "Warpstation") {
+                
+                if ((hiderwindow < 5.0 || getPageSetting('WarpstationWall')) && bestBuilding == "Warpstation") {
                     //Warpstation Wall - allow only warps that cost 1/n'th less then current metal (try to save metal for next prestige) 
                     var costratio = 5;  //(1/4th)                    
                     if (getBuildingItemPrice(game.buildings.Warpstation, "metal", false, 1) * Math.pow(1 - game.portal.Resourceful.modifier, game.portal.Resourceful.level) > game.resources.metal.owned/costratio)
