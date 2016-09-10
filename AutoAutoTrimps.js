@@ -2058,10 +2058,8 @@ function autoMap() {
     }
     var obj = {};
     var siphonMap = -1;
-    var uniqueMaps = 0;
     for (var map in game.global.mapsOwnedArray) {
         if (!game.global.mapsOwnedArray[map].noRecycle) {
-            uniqueMaps++;
             obj[map] = game.global.mapsOwnedArray[map].level;
             if(game.global.mapsOwnedArray[map].level == siphlvl)
                 siphonMap = map;                
@@ -2373,8 +2371,7 @@ function autoMap() {
                     debug("Retrying BUYING a Map, level: #" + document.getElementById("mapLevelInput").value, 'th-large');
                     buyMap();
                 }
-                highestMap++;
-                if (26>=game.global.mapsOwnedArray[highestMap+uniqueMaps].size){
+                if (26>=game.global.mapsOwnedArray[game.global.mapsOwnedArray.length].size){
                     debug("MADE MAP p, level: #" + document.getElementById("mapLevelInput").value, 'th-large');
                     return;
                 }
