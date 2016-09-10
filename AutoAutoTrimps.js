@@ -1070,7 +1070,7 @@ function highlightHousing() {
         	bestBuilding = "Warpstation";
         	safeBuyBuilding('Warpstation');
         } else {
-        	//safeBuyBuilding('Warpstation');
+        	safeBuyBuilding('Warpstation');
         }
         if (bestBuilding) {
             document.getElementById(bestBuilding).style.border = "1px solid #00CC00";
