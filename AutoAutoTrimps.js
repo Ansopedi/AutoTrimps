@@ -2373,9 +2373,11 @@ function autoMap() {
                 }
                 if (26>=game.global.mapsOwnedArray[game.global.mapsOwnedArray.length].size){
                     debug("MADE MAP p, level: #" + document.getElementById("mapLevelInput").value, 'th-large');
-                    return;
+                    break;
                 }
             }
+            selectedMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length].id;
+            runMap();
             //if we already have a map picked, run it
         }} else {
             selectMap(selectedMap);
