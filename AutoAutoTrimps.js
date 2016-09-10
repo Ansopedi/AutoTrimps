@@ -1059,7 +1059,7 @@ function highlightHousing() {
                 
                 if ((hiderwindow < 5.0 || getPageSetting('WarpstationWall')) && bestBuilding == "Warpstation") {
                     //Warpstation Wall - allow only warps that cost 1/n'th less then current metal (try to save metal for next prestige) 
-                    var costratio = 5;  //(1/4th)                    
+                    var costratio = 10;  //(1/4th)                    
                     if (getBuildingItemPrice(game.buildings.Warpstation, "metal", false, 1) * Math.pow(1 - game.portal.Resourceful.modifier, game.portal.Resourceful.level) > game.resources.metal.owned/costratio)
                         bestBuilding = null;
                 }
@@ -1070,7 +1070,7 @@ function highlightHousing() {
         	bestBuilding = "Warpstation";
         	safeBuyBuilding('Warpstation');
         } else {
-        	safeBuyBuilding('Warpstation');
+        	//safeBuyBuilding('Warpstation');
         }
         if (bestBuilding) {
             document.getElementById(bestBuilding).style.border = "1px solid #00CC00";
@@ -1260,7 +1260,7 @@ function buyUpgrades() {
         upgrade = upgradeList[upgrade];
         var gameUpgrade = game.upgrades[upgrade];
         var available = (gameUpgrade.allowed > gameUpgrade.done && canAffordTwoLevel(gameUpgrade));
-		if (upgrade == 'Gigastation' && game.global.world >= getPageSetting('VoidMaps')) {
+		if (upgrade == 'Gigastation') {
             buyUpgrade('Gigastation', true, true);
             return;
         }
