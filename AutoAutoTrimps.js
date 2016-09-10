@@ -2376,7 +2376,7 @@ function autoMap() {
                     break;
                 }
             }
-            selectedMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length].id;
+            selectedMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id;
             runMap();
             //if we already have a map picked, run it
         }} else {
