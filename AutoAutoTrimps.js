@@ -2367,7 +2367,9 @@ function autoMap() {
                 var result = buyMap();
                 if(result == -2){
                     debug("Too many maps, recycling now: ", 'th-large');
+                    document.getElementById("mapLevelInput").value = game.global.world;
                     recycleBelow(true);
+                    document.getElementById("mapLevelInput").value = game.global.world-1;
                     debug("Retrying BUYING a Map, level: #" + document.getElementById("mapLevelInput").value, 'th-large');
                     buyMap();
                 }
