@@ -2370,10 +2370,11 @@ function autoMap() {
                     recycleBelow(true);
                     debug("Retrying BUYING a Map, level: #" + document.getElementById("mapLevelInput").value, 'th-large');
                     buyMap();
-                }}
-                if (26>=game.global.mapsOwnedArray[highestMap].size){
-                    break;
                 }
+            	if (26>=game.global.mapsOwnedArray[highestMap].size){
+                    break;
+                    }	
+            	}
             }
             //if we already have a map picked, run it
         } else {
