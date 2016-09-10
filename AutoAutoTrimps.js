@@ -1736,8 +1736,8 @@ function autoStance() {
              //enoughDamage = true; enoughHealth = true; shouldFarm = false;
         }
     }
-    if (game.global.mapsActive && (getCurrentEnemy(1).name == "Jestimp" || getCurrentEnemy(1).name == "Chronoimp" ||  (hiderwindow > 0.35 && getCurrentMapObject().location != "Void"))){ setFormation(4); return;}
-    if (game.global.mapsActive && (getCurrentEnemy(1).name != "Jestimp" && getCurrentEnemy(1).name != "Chronoimp" &&  (hiderwindow < 0.35 && getCurrentMapObject().location != "Void"))){ setFormation(2); return;}
+    if (game.global.mapsActive && (getCurrentEnemy(1).name == "Jestimp" || getCurrentEnemy(1).name == "Chronoimp" ||  (hiderwindow > 0.75 && getCurrentMapObject().location != "Void"))){ setFormation(4); return;}
+    if (game.global.mapsActive && (getCurrentEnemy(1).name != "Jestimp" && getCurrentEnemy(1).name != "Chronoimp" &&  (hiderwindow < 0.75 && getCurrentMapObject().location != "Void"))){ setFormation(2); return;}
     if (game.global.mapsActive && (getCurrentEnemy(1).name == "Jestimp" || getCurrentEnemy(1).name == "Chronoimp" ||  (hiderwindow > 960 && getCurrentMapObject().location == "Void"))){ setFormation(4); return;}
     if (!game.global.mapsActive && (hiderwindow > 660)){ setFormation(4); return;}
     
