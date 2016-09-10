@@ -1953,8 +1953,6 @@ function autoMap() {
         enoughDamage = true; enoughHealth = true; shouldFarm = false;
         return;
     }
-    //if we are in mapology and we have no credits, exit
-    if (game.global.challengeActive == "Mapology" && game.challenges.Mapology.credits < 1) return;
     //FIND VOID MAPS LEVEL:
     var voidMapLevelSetting = getPageSetting('VoidMaps');
     //decimal void maps are possible, using string function to avoid false float precision (0.29999999992). javascript can compare ints to strings anyway.
@@ -1988,10 +1986,6 @@ function autoMap() {
     if(!getPageSetting('DisableFarm')) {
         shouldFarm = shouldFarm ? getEnemyMaxHealth(game.global.world) / baseDamage > 10 : getEnemyMaxHealth(game.global.world) / baseDamage > 16;
     }    
-    if(game.global.challengeActive == "Toxicity") {
-        //enemyDamage *= 2; //ignore damage changes (which would effect how much health we try to buy) entirely since we die in 20 attacks anyway?
-        enemyHealth *= 2;
-    }
     var pierceMod = 0;
     enoughHealth = (baseHealth * 4 > 30 * (enemyDamage - baseBlock / 2 > 0 ? enemyDamage - baseBlock / 2 : enemyDamage * (0.2 + pierceMod))
                     || 
@@ -2072,65 +2066,6 @@ function autoMap() {
     if (keysSorted[0]) var highestMap = keysSorted[0];
     else selectedMap = "create";
     
-    //Look through all the maps we have - find Uniques and figure out if we need to run them.
-    for (var map in game.global.mapsOwnedArray) {
-        var theMap = game.global.mapsOwnedArray[map];            
-        if (theMap.noRecycle && getPageSetting('RunUniqueMaps')) {
-            if (theMap.name == 'The Wall' && game.upgrades.Bounty.allowed == 0) {
-                selectedMap = theMap.id;
-                break;
-            }
-            if (theMap.name == 'Dimension of Anger' && document.getElementById("portalBtn").style.display == "none") {
-                var doaDifficulty = 0; //Math.ceil(theMap.difficulty / 2);
-                if(game.global.world < 20 + doaDifficulty) continue; 
-                selectedMap = theMap.id;
-                break;
-            }
-            //run the prison only if we are 'cleared' to run level 80 + 1 level per 200% difficulty. Could do more accurate calc if needed
-            if(theMap.name == 'The Prison' && (game.global.challengeActive == "Electricity" || game.global.challengeActive == "Mapocalypse")) {
-                var prisonDifficulty = Math.ceil(theMap.difficulty / 2);
-                if(game.global.world >= 80 + prisonDifficulty) {
-                    selectedMap = theMap.id;
-                    break;
-                }
-            }
-            if(theMap.name == 'The Block' && !game.upgrades.Shieldblock.allowed && (game.global.challengeActive == "Scientist" || game.global.challengeActive == "Trimp" || getPageSetting('BuyShieldblock'))) {
-                selectedMap = theMap.id;
-                break;
-            }
-            if(theMap.name == 'Trimple of Doom' && game.global.challengeActive == "Meditate") {
-                selectedMap = theMap.id;
-                break;
-            }
-            if(theMap.name == 'Bionic Wonderland' && game.global.challengeActive == "Crushed" ) {
-                var wonderlandDifficulty = Math.ceil(theMap.difficulty / 2);
-                if(game.global.world >= 125 + wonderlandDifficulty) {
-                    selectedMap = theMap.id;
-                    break;
-                }
-            }
-            //run Bionics before spire to farm.
-            if (getPageSetting('RunBionicBeforeSpire') && (game.global.world == 200) && theMap.name.includes('Bionic Wonderland')){                    
-                //this is how to check if a bionic is green or not.
-                var bionicnumber = ((theMap.level - 125) / 15).toFixed(2);
-                //if numbers match, map is green, so run it. (do the pre-requisite bionics one at a time in order)
-                if (bionicnumber == game.global.bionicOwned && bionicnumber < 5){ 
-                    selectedMap = theMap.id;
-                    break;
-                }
-                //Count number of prestige items left,
-                var prestigeitemsleft = addSpecials(true, true, theMap);
-                //Always run Bionic Wonderland VI (if there are still prestige items available)
-                //Run Bionic Wonderland VII (if we have exhausted all the prestiges from VI)
-                if ((prestigeitemsleft > 0 && (theMap.name == 'Bionic Wonderland VI' || theMap.name == 'Bionic Wonderland VII'))){
-                    selectedMap = theMap.id;
-                    break;
-                }
-            }                
-            //other unique maps here
-        }
-    }
-    
     //voidArray: make an array with all our voidmaps, so we can sort them by real-world difficulty level
     var voidArray = [];
     //values are easiest to hardest. (hardest has the highest value)
@@ -2209,7 +2144,7 @@ function autoMap() {
             //if needPrestige, TRY to find current level map as the highest level map we own.
             if (needPrestige||mapYouSlow )
                 if (game.global.world == game.global.mapsOwnedArray[highestMap].level&&26>=game.global.mapsOwnedArray[highestMap].size)
-                    selectedMap = game.global.mapsOwnedArray[highestMap].id;
+                    selectedMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id;
                 else
                     selectedMap = "create";
             //if needFarmSpire x minutes is true, switch over from wood maps to metal maps.    
