@@ -2286,9 +2286,12 @@ function autoMap() {
         if (selectedMap == "world") {
             mapsClicked();  //go back
         } 
-        else if (selectedMap == "create") {
-            if (mapYouSlow ||needPrestige)
+        else if (selectedMap == "create") { 
+            if (needPrestige)
                 document.getElementById("mapLevelInput").value = game.global.world;
+            else if (mapYouSlow){
+            	document.getElementById("mapLevelInput").value = game.global.world-1;
+            }
             else
                 document.getElementById("mapLevelInput").value = siphlvl;
             if (game.global.world == 200 && game.global.spireActive) {
@@ -2359,6 +2362,7 @@ function autoMap() {
                 debug("..picking our highest map:# " + game.global.mapsOwnedArray[highestMap].id + " Level: " + game.global.mapsOwnedArray[highestMap].level, '*happy2');
                 runMap();
             } else {
+            	while (true){
                 debug("BUYING a Map, level: #" + document.getElementById("mapLevelInput").value, 'th-large');
                 var result = buyMap();
                 if(result == -2){
@@ -2366,6 +2370,9 @@ function autoMap() {
                     recycleBelow(true);
                     debug("Retrying BUYING a Map, level: #" + document.getElementById("mapLevelInput").value, 'th-large');
                     buyMap();
+                }}
+                if (26>=game.global.mapsOwnedArray[highestMap].size){
+                    break;
                 }
             }
             //if we already have a map picked, run it
