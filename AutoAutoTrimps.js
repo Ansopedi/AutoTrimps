@@ -2058,8 +2058,10 @@ function autoMap() {
     }
     var obj = {};
     var siphonMap = -1;
+    var uniqueMaps = 0;
     for (var map in game.global.mapsOwnedArray) {
         if (!game.global.mapsOwnedArray[map].noRecycle) {
+            uniqueMaps++;
             obj[map] = game.global.mapsOwnedArray[map].level;
             if(game.global.mapsOwnedArray[map].level == siphlvl)
                 siphonMap = map;                
@@ -2362,6 +2364,7 @@ function autoMap() {
                 debug("..picking our highest map:# " + game.global.mapsOwnedArray[highestMap].id + " Level: " + game.global.mapsOwnedArray[highestMap].level, '*happy2');
                 runMap();
             } else {
+            	while (true){
                 debug("BUYING a Map, level: #" + document.getElementById("mapLevelInput").value, 'th-large');
                 var result = buyMap();
                 if(result == -2){
@@ -2370,11 +2373,11 @@ function autoMap() {
                     debug("Retrying BUYING a Map, level: #" + document.getElementById("mapLevelInput").value, 'th-large');
                     buyMap();
                 }
-                if (26>=game.global.mapsOwnedArray[game.global.mapsOwned].size){
+                if (26>=game.global.mapsOwnedArray[game.global.mapsOwned+uniqueMaps].size){
                     debug("MADE MAP p, level: #" + document.getElementById("mapLevelInput").value, 'th-large');
                     return;
                 }
-            
+            }
             //if we already have a map picked, run it
         }} else {
             selectMap(selectedMap);
