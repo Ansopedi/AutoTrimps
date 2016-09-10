@@ -2371,10 +2371,6 @@ function autoMap() {
                     debug("Retrying BUYING a Map, level: #" + document.getElementById("mapLevelInput").value, 'th-large');
                     buyMap();
                 }
-            	if (26>=game.global.mapsOwnedArray[highestMap].size){
-                    return;
-                    }	
-            	}
             }
             //if we already have a map picked, run it
         } else {
