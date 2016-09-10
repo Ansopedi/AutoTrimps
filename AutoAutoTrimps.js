@@ -2373,7 +2373,8 @@ function autoMap() {
                     debug("Retrying BUYING a Map, level: #" + document.getElementById("mapLevelInput").value, 'th-large');
                     buyMap();
                 }
-                if (26>=game.global.mapsOwnedArray[game.global.mapsOwned].size){
+                highestMap++;
+                if (26>=game.global.mapsOwnedArray[highestMap+uniqueMaps].size){
                     debug("MADE MAP p, level: #" + document.getElementById("mapLevelInput").value, 'th-large');
                     return;
                 }
