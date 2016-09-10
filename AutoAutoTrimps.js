@@ -2371,7 +2371,7 @@ function autoMap() {
                     debug("Retrying BUYING a Map, level: #" + document.getElementById("mapLevelInput").value, 'th-large');
                     buyMap();
                 }
-                if (26>=game.global.mapsOwnedArray[game.global.mapsOwnedArray.length].size){
+                if (26>=game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].size){
                     debug("MADE MAP p, level: #" + document.getElementById("mapLevelInput").value, 'th-large');
                     break;
                 }
