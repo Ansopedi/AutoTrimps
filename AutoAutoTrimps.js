@@ -2202,7 +2202,7 @@ function autoMap() {
             if(
                 game.global.switchToMaps 
                 && 
-                ( needPrestige || doVoids || (game.global.challengeActive == 'Lead' && game.global.world % 2 == 1)) 
+                (doVoids || (game.global.challengeActive == 'Lead' && game.global.world % 2 == 1)) 
                 && 
                     (
                     (game.resources.trimps.realMax() <= game.resources.trimps.owned + 1)
