@@ -2203,7 +2203,7 @@ function autoMap() {
     }
 
     //map if we don't have health/dmg or we need to clear void maps or if we are prestige mapping, and our set item has a new prestige available 
-    if (mapYouSlow || doVoids || needPrestige) {
+    if (mapYouSlow || doVoids) {
         //selectedMap = world here if we haven't set it to create yet, meaning we found appropriate high level map, or siphon map
         if (selectedMap == "world") {
             //if needPrestige, TRY to find current level map as the highest level map we own.
@@ -2287,7 +2287,7 @@ function autoMap() {
             mapsClicked();  //go back
         } 
         else if (selectedMap == "create") { 
-            if (needPrestige)
+            if (false)
                 document.getElementById("mapLevelInput").value = game.global.world;
             else if (mapYouSlow){
             	document.getElementById("mapLevelInput").value = game.global.world-1;
