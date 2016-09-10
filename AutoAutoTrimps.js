@@ -2372,7 +2372,7 @@ function autoMap() {
                     buyMap();
                 }
             	if (26>=game.global.mapsOwnedArray[highestMap].size){
-                    break;
+                    return;
                     }	
             	}
             }
