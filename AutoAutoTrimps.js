@@ -2162,7 +2162,7 @@ function autoMap() {
         var repeatBionics = getPageSetting('RunBionicBeforeSpire') && game.global.bionicOwned >= 5;
         //if we are doing the right map, and it's not a norecycle (unique) map, and we aren't going to hit max map bonus
         //or repeatbionics is true and there are still prestige items available to get
-        if (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (game.global.mapBonus < 9)) || (repeatBionics && addSpecials(true, true, getCurrentMapObject()) > 0)) {
+        if (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (game.global.mapBonus < 10)) || (repeatBionics && addSpecials(true, true, getCurrentMapObject()) > 0)) {
             var targetPrestige = autoTrimpSettings.Prestige.selected;
             //make sure repeat map is on
             if (!game.global.repeatMap) {
@@ -2172,13 +2172,10 @@ function autoMap() {
             if (!shouldDoMaps && (game.global.mapGridArray[game.global.mapGridArray.length - 1].special == targetPrestige && game.mapUnlocks[targetPrestige].last >= game.global.world - 9 )) {
                 repeatClicked();
             }
-            //avoid another map cycle due to having the amount of tox stacks we need.
-            if (stackingTox && (game.challenges.Toxicity.stacks + game.global.mapGridArray.length - (game.global.lastClearedMapCell + 1) >= 1500)){
-                repeatClicked();
-            }
-            //turn off repeat maps if we doing Watch maps.
-            if (shouldDoWatchMaps)
-                repeatClicked();
+            if (
+        (!(game.global.mapBonus+1 < 10 && hiderwindow < 0.0275 ) || (game.global.mapBonus+1 < 9 && hiderwindow < 0.03 ) || (game.global.mapBonus+1 < 8 && hiderwindow < 0.036 ) || (game.global.mapBonus+1 < 7 && hiderwindow < 0.05 ) || (game.global.mapBonus+1 < 6 && hiderwindow < 0.08 ) || (game.global.mapBonus+1 < 5 && hiderwindow < 0.13 ) || (game.global.mapBonus+1 < 4 && hiderwindow < 0.2 ) || (game.global.mapBonus+1 < 3 && hiderwindow < 0.5 ) || (game.global.mapBonus+1 < 2 && hiderwindow < 0.7 ))){
+        	repeatClicked();
+        }
         } else {
             //otherwise, make sure repeat map is off
             if (game.global.repeatMap) {
