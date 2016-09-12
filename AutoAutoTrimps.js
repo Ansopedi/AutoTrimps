@@ -1988,7 +1988,7 @@ function autoMap() {
     HDratio = getEnemyMaxHealth(game.global.world) / baseDamage;
     //prevents map-screen from flickering on and off during startup when base damage is 0.
     if (baseDamage > 0){
-        var shouldDoMaps = !enoughHealth || !enoughDamage || shouldFarm;
+        //var shouldDoMaps = !enoughHealth || !enoughDamage || shouldFarm;
     }
     var selectedMap = "world";       
     
@@ -2024,9 +2024,6 @@ function autoMap() {
         mapYouSlow = true;		
         console.log("now walking mapYouSlow = true");		
         }		
-       //shouldFarm = mapYouSlow ? true : shouldFarm;		
-        enoughDamage = mapYouSlow ? true : enoughDamage;		
-        enoughHealth = mapYouSlow ? true : enoughHealth;
     }
 
     var shouldDoSpireMaps = false;
