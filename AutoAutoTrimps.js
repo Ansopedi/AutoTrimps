@@ -527,6 +527,8 @@ function workerRatios() {
 
 //An error-resilient function that will actually purchase buildings and return a success status
 function safeBuyBuilding(building) {
+    if (game.buildings[building].locked)
+        return false;
     //limit to 1 building per queue
     for (var b in game.global.buildingsQueue) {
         if (game.global.buildingsQueue[b].includes(building)) return false;
