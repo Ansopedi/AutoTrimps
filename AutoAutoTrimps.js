@@ -2104,7 +2104,9 @@ function autoGoldenUpgrades() {
     if (setting == "Off") return;   //if disabled, exit.
     var num = getAvailableGoldenUpgrades();
     if (num == 0) return;       //if we have nothing to buy, exit.
-    //buy one upgrade per loop.
+    if (game.global.world>=539&&game.global.world<=541){
+     	buyGoldenUpgrade("Battle");
+     }
     buyGoldenUpgrade(setting);
 }
 
