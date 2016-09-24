@@ -1720,7 +1720,7 @@ function autoMap() {
             if (game.global.repeatMap) {
                 repeatClicked();
             }
-    //    }
+        }
     //clicks the maps button, once or twice (inside the world):
     } else if (!game.global.preMapsActive && !game.global.mapsActive) {
         if (selectedMap != "world") {
