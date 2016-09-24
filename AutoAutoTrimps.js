@@ -1557,7 +1557,7 @@ function autoMap() {
         //levels of new Giga
         var stationLevel = [61,62,63,64,65,66,67,68,69,70,72,74,76,78,81,84,87,90,95,100,105,110,115,120,125,130,135,140,145,150,155,160,165,170,175,180,190,200,210,220,230,240,250,260,270,280,290,300];
         if (
-        ((game.global.mapBonus < 10 && hiderwindow < 0.0275 ) || (game.global.mapBonus < 9 && hiderwindow < 0.03 ) || (game.global.mapBonus < 8 && hiderwindow < 0.036 ) || (game.global.mapBonus < 7 && hiderwindow < 0.05 ) || (game.global.mapBonus < 6 && hiderwindow < 0.08 ) || (game.global.mapBonus < 5 && hiderwindow < 0.13 ) || (game.global.mapBonus < 4 && hiderwindow < 0.2 ) || (game.global.mapBonus < 3 && hiderwindow < 0.5 ) || (game.global.mapBonus < 2 && hiderwindow < 0.75 ) || (game.global.mapBonus < 1 && hiderwindow < 100 && game.global.lastClearedCell<31 ) || (game.global.mapBonus < 1 && hiderwindow < 10 && game.global.lastClearedCell<51 )))
+        ((game.global.mapBonus < 10 && hiderwindow < 0.011 ) || (game.global.mapBonus < 9 && hiderwindow < 0.0125 ) || (game.global.mapBonus < 8 && hiderwindow < 0.016 ) || (game.global.mapBonus < 7 && hiderwindow < 0.0185 ) || (game.global.mapBonus < 6 && hiderwindow < 0.022 ) || (game.global.mapBonus < 5 && hiderwindow < 0.028 ) || (game.global.mapBonus < 4 && hiderwindow <0.033 ) || (game.global.mapBonus < 3 && hiderwindow < 0.042 ) || (game.global.mapBonus < 2 && hiderwindow < 0.065 ) || (game.global.mapBonus < 1 && hiderwindow < 100 && game.global.lastClearedCell<31 ) || (game.global.mapBonus < 1 && hiderwindow < 10 && game.global.lastClearedCell<51 )))
         //(game.global.mapsActive && getBreedTime(true) > 0 && hiderwindow < 1)	//Stay in maps to heal
         //(game.global.world >= 310 && ((new Date().getTime() - game.global.zoneStarted) / 1000 / 60) < 10)	//option to force stay in zone X time in min/cleared maps and farm
         //(game.global.world == 200 && game.global.lastClearedCell > 20 && ((new Date().getTime() - game.global.zoneStarted) / 1000 / 60) < 10)		//option to force stay in zone X time in min and farm		
@@ -1711,16 +1711,16 @@ function autoMap() {
             if (!shouldDoMaps && (game.global.mapGridArray[game.global.mapGridArray.length - 1].special == targetPrestige && game.mapUnlocks[targetPrestige].last >= game.global.world - 9 )) {
                 repeatClicked();
             }
-            if (
-        (!(game.global.mapBonus+1 < 10 && hiderwindow < 0.0275 ) || (game.global.mapBonus+1 < 9 && hiderwindow < 0.03 ) || (game.global.mapBonus+1 < 8 && hiderwindow < 0.036 ) || (game.global.mapBonus+1 < 7 && hiderwindow < 0.05 ) || (game.global.mapBonus+1 < 6 && hiderwindow < 0.08 ) || (game.global.mapBonus+1 < 5 && hiderwindow < 0.13 ) || (game.global.mapBonus+1 < 4 && hiderwindow < 0.2 ) || (game.global.mapBonus+1 < 3 && hiderwindow < 0.5 ) || (game.global.mapBonus+1 < 2 && hiderwindow < 0.75 ))){
-        	repeatClicked();
-        }
-        } else {
+          //  if (
+        //(!(game.global.mapBonus+1 < 10 && hiderwindow < 0.0275 ) || (game.global.mapBonus+1 < 9 && hiderwindow < 0.03 ) || (game.global.mapBonus+1 < 8 && hiderwindow < 0.036 ) || (game.global.mapBonus+1 < 7 && hiderwindow < 0.05 ) || (game.global.mapBonus+1 < 6 && hiderwindow < 0.08 ) || (game.global.mapBonus+1 < 5 && hiderwindow < 0.13 ) || (game.global.mapBonus+1 < 4 && hiderwindow < 0.2 ) || (game.global.mapBonus+1 < 3 && hiderwindow < 0.5 ) || (game.global.mapBonus+1 < 2 && hiderwindow < 0.75 ))){
+        //	repeatClicked();
+      //  }
+       // } else {
             //otherwise, make sure repeat map is off
             if (game.global.repeatMap) {
                 repeatClicked();
             }
-        }
+    //    }
     //clicks the maps button, once or twice (inside the world):
     } else if (!game.global.preMapsActive && !game.global.mapsActive) {
         if (selectedMap != "world") {
