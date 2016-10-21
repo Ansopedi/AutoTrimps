@@ -377,7 +377,7 @@ function getEnemyMaxAttack(world, level, name, diff, corrupt) {
     if (!corrupt)
         amt *= game.badGuys[name].attack;
     else {
-        amt *= getCorruptScale("attack");
+        amt *= mutations.Corruption.statScale(3);
     }
     return Math.floor(amt);
 }
