@@ -2173,7 +2173,7 @@ function useScryerStance() {
         hiderwindow = ovklHDratio;
         Area51i = ovkldmg;
         Area60i = getEnemyMaxHealth(game.global.world,1,true);
-        armorValue = ((baseHealth/8)/(getEnemyMaxAttack(game.global.world, 95, 'Snimp',0)*getCorruptScale("attack")));
+        armorValue = ((baseHealth/8)/(getEnemyMaxAttack(game.global.world, 95, 'Snimp',0)*mutations.Corruption.statScale(3)));
         armorTempValue = (game.global.soldierHealth/(getEnemyMaxAttack(game.global.world, 95, 'Snimp',0)*mutations.Corruption.statScale(3)));
         if (hiderwindow > 120) { // && game.global.world < getPageSetting('VoidMaps')
              //enoughDamage = true; enoughHealth = true; shouldFarm = false;
