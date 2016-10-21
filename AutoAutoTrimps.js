@@ -1266,8 +1266,8 @@ function autoStance() {
         hiderwindow = ovklHDratio;
         Area51i = ovkldmg;
         Area60i = getEnemyMaxHealth(game.global.world,1,true);
-        armorValue = ((baseHealth/8)/(getEnemyMaxAttack(game.global.world, 95, 'Snimp',0)*getCorruptScale("attack")));
-        armorTempValue = (game.global.soldierHealth/(getEnemyMaxAttack(game.global.world, 95, 'Snimp',0)*getCorruptScale("attack")));
+        armorValue = ((baseHealth/8)/(getEnemyMaxAttack(game.global.world, 95, 'Snimp',0)*mutations.Corruption.statScale(3)));
+        armorTempValue = (game.global.soldierHealth/(getEnemyMaxAttack(game.global.world, 95, 'Snimp',0)*mutations.Corruption.statScale(3)));
         if (hiderwindow > 120) { // && game.global.world < getPageSetting('VoidMaps')
              //enoughDamage = true; enoughHealth = true; shouldFarm = false;
         }
@@ -1322,7 +1322,7 @@ function autoStance() {
         //check for world Corruption
         if (enemy.corrupted){
             enemyHealth *= mutations.Corruption.statScale(10);
-            enemyDamage *= getCorruptScale("attack");
+            enemyDamage *= mutations.Corruption.statScale(3);
         }
         if (enemy && enemy.corrupted == 'corruptStrong') {
             enemyDamage *= 2;
@@ -1356,7 +1356,7 @@ function autoStance() {
         //check for voidmap Corruption
         if ((!game.global.preMapsActive && game.global.mapsActive && getCurrentMapObject().location != "Void") && enemy.corrupted){
             enemyHealth *= (mutations.Corruption.statScale(10) / 2).toFixed(1);
-            enemyDamage *= (getCorruptScale("attack") / 2).toFixed(1);
+            enemyDamage *= (mutations.Corruption.statScale(3) / 2).toFixed(1);
         }
         if (enemy && enemy.corrupted == 'corruptStrong') {
             enemyDamage *= 2;
@@ -1635,7 +1635,7 @@ function autoMap() {
             //check to make sure we won't get 1-shot in nostance by boss
             var eAttack = getEnemyMaxAttack(game.global.world, theMap.size, 'Voidsnimp', theMap.difficulty);
             if (game.global.world >= 181 || (game.global.challengeActive == "Corrupted" && game.global.world >= 60))
-                eAttack *= (getCorruptScale("attack") / 2).toFixed(1);
+                eAttack *= (mutations.Corruption.statScale(3) / 2).toFixed(1);
             var ourHealth = baseHealth;
             if(game.global.challengeActive == 'Balance') {
                 var stacks = game.challenges.Balance.balanceStacks ? (game.challenges.Balance.balanceStacks > theMap.size) ? theMap.size : game.challenges.Balance.balanceStacks : false;
@@ -2174,7 +2174,7 @@ function useScryerStance() {
         Area51i = ovkldmg;
         Area60i = getEnemyMaxHealth(game.global.world,1,true);
         armorValue = ((baseHealth/8)/(getEnemyMaxAttack(game.global.world, 95, 'Snimp',0)*getCorruptScale("attack")));
-        armorTempValue = (game.global.soldierHealth/(getEnemyMaxAttack(game.global.world, 95, 'Snimp',0)*getCorruptScale("attack")));
+        armorTempValue = (game.global.soldierHealth/(getEnemyMaxAttack(game.global.world, 95, 'Snimp',0)*mutations.Corruption.statScale(3)));
         if (hiderwindow > 120) { // && game.global.world < getPageSetting('VoidMaps')
              //enoughDamage = true; enoughHealth = true; shouldFarm = false;
         }
