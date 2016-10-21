@@ -403,7 +403,7 @@ function getEnemyMaxHealth(world, level, corrupt) {
     if (!corrupt)
         amt *= game.badGuys["Grimp"].health;
     else
-        amt *= getCorruptScale("health");
+        amt *= mutations.Corruption.statScale(10);
     return Math.floor(amt);
 }
 
@@ -1321,7 +1321,7 @@ function autoStance() {
         var enemyDamage = enemy.attack * 1.2;   //changed by genBTC from 1.19 (there is no fluctuation)
         //check for world Corruption
         if (enemy.corrupted){
-            enemyHealth *= getCorruptScale("health");
+            enemyHealth *= mutations.Corruption.statScale(10);
             enemyDamage *= getCorruptScale("attack");
         }
         if (enemy && enemy.corrupted == 'corruptStrong') {
@@ -1355,7 +1355,7 @@ function autoStance() {
         var enemyDamage = enemy.attack * 1.2;   //changed by genBTC from 1.19 (there is no fluctuation)
         //check for voidmap Corruption
         if ((!game.global.preMapsActive && game.global.mapsActive && getCurrentMapObject().location != "Void") && enemy.corrupted){
-            enemyHealth *= (getCorruptScale("health") / 2).toFixed(1);
+            enemyHealth *= (mutations.Corruption.statScale(10) / 2).toFixed(1);
             enemyDamage *= (getCorruptScale("attack") / 2).toFixed(1);
         }
         if (enemy && enemy.corrupted == 'corruptStrong') {
