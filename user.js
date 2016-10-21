@@ -8,4 +8,4 @@
 // @include        *kongregate.com/games/GreenSatellite/trimps
 // @grant        none
 // ==/UserScript==
-javascript:with(document)(head.appendChild(createElement('script')).src='https://ansopedi.github.io/AutoTrimps/AutoAutoTrimps.js')._;
+javascript:with(document)(head.appendChild(createElement('script')).src='https://ansopedi.github.io/AutoTrimps/AutoAutoTrimps.js');
