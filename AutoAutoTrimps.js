@@ -1088,7 +1088,6 @@ function autoLevelEquipment() {
 //"Auto Gather/Build"
 function manualLabor() {  
     if (game.resources.science.owned < scienceNeeded && document.getElementById('scienceCollectBtn').style.display != 'none' && document.getElementById('science').style.visibility != 'hidden') {
-        if (getPlayerModifier() < getPerSecBeforeManual('Scientist') && game.global.turkimpTimer > 0){
             setGather('metal');
         }
         else {
