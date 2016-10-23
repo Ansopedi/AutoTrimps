@@ -1087,7 +1087,7 @@ function autoLevelEquipment() {
 
 //"Auto Gather/Build"
 function manualLabor() {  
-    if (game.resources.science.owned < scienceNeeded && document.getElementById('scienceCollectBtn').style.display != 'none' && document.getElementById('science').style.visibility != 'hidden') {
+    if (game.resources.science.owned < getPlayerModifier()*0.1 && document.getElementById('scienceCollectBtn').style.display != 'none' && document.getElementById('science').style.visibility != 'hidden') {
             setGather('metal');
         }
         else {
