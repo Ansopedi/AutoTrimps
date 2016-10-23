@@ -594,14 +594,6 @@ function buyFoodEfficientHousing() {
     var houseWorth = game.buildings.House.locked ? 0 : game.buildings.House.increase.by / getBuildingItemPrice(game.buildings.House, "food", false, 1);
     var hutWorth = game.buildings.Hut.increase.by / getBuildingItemPrice(game.buildings.Hut, "food", false, 1);
     var hutAtMax = (game.buildings.Hut.owned >= autoTrimpSettings.MaxHut.value && autoTrimpSettings.MaxHut.value != -1);
-    //if hutworth is more, but huts are maxed , still buy up to house max
-    if ((houseWorth > hutWorth || hutAtMax) && game.global.buildingsQueue.length == 0 && canAffordBuilding('House') && (game.buildings.House.owned < autoTrimpSettings.MaxHouse.value || autoTrimpSettings.MaxHouse.value == -1)) {
-        safeBuyBuilding('House');
-    } else {
-        if (!hutAtMax && game.global.buildingsQueue.length == 0) {
-            safeBuyBuilding('Hut');
-        }
-    }
 }
 
 //Main Decision Function that determines cost efficiency and Buys all housing (gems), or calls buyFoodEfficientHousing, and also non-storage buildings (Gym,Tribute,Nursery)s
