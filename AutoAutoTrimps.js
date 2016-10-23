@@ -1093,7 +1093,6 @@ function manualLabor() {
         else {
             setGather('science');
         }
-    }
 }
 
 //Autostance - function originally created by Belaith (in 1971)
