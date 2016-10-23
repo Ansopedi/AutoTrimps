@@ -525,7 +525,7 @@ function safeBuyBuilding(building) {
 function highlightHousing() {
     var oldBuy = game.global.buyAmt;
     game.global.buyAmt = 1;
-    var allHousing = ["Mansion", "Hotel", "Resort", "Gateway", "Collector", "Warpstation"];
+    var allHousing = ["Warpstation"];
     var unlockedHousing = [];
     for (var house in allHousing) {
         if (game.buildings[allHousing[house]].locked === 0) {
