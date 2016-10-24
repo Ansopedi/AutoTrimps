@@ -2368,5 +2368,5 @@ function updateValueFields3() {
     var Area52 = document.getElementById('Area52');
     var Area60 = document.getElementById('Area60');
 	var hePercent = (game.stats.heliumHour.value() / (game.global.totalHeliumEarned))*100;
-    Area52.innerHTML = 'He/hr: ' + getStats()+'<br>He: ' + hePercent*(Date.now() - game.global.portalTime) / 3600000 +'%'; //'S-DMG: ' + (Area51i).toPrecision(2) + '<br>Max-HP: ' + (Area60i).toPrecision(2) + '<br>He/hr: ' + getStats(); 
+    Area52.innerHTML = 'He/hr: ' + getStats()+'<br>He: ' + (hePercent*(Date.now() - game.global.portalTime) / 3600000).toFixed(3) +'%'; //'S-DMG: ' + (Area51i).toPrecision(2) + '<br>Max-HP: ' + (Area60i).toPrecision(2) + '<br>He/hr: ' + getStats(); 
 }
