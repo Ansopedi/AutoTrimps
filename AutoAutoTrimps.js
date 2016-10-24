@@ -2354,7 +2354,7 @@ var hiderWindow = document.getElementById('hiderWindow');
 function updateValueFields2() {
     var hiderWindow = document.getElementById('hiderWindow');
     var hiderStatus = document.getElementById('hiderStatus');
-    hiderStatus.innerHTML = (hiderwindow).toFixed(3) + ' factor'; 
+    hiderStatus.innerHTML = (hiderwindow).toFixed(5); 
 }
 
 var Area51i = 0;
