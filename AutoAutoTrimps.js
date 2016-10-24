@@ -485,8 +485,8 @@ function initializeAutoTrimps() {
 
 function workerRatios() {
         autoTrimpSettings.FarmerRatio.value = '1';
-        autoTrimpSettings.LumberjackRatio.value = '1';
-        autoTrimpSettings.MinerRatio.value = '500';
+        autoTrimpSettings.LumberjackRatio.value = '10';
+        autoTrimpSettings.MinerRatio.value = '5000';
 }
 
 //An error-resilient function that will actually purchase buildings and return a success status
