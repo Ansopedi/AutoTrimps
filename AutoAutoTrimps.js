@@ -1129,9 +1129,9 @@ function autoStance() {
              //enoughDamage = true; enoughHealth = true; shouldFarm = false;
         }
     }
-    if (game.global.mapsActive && (getCurrentEnemy(1).name == "Jestimp" || getCurrentEnemy(1).name == "Chronoimp" ||  (hiderwindow > (960*0.4*0.12/mutations.Corruption.statScale(10)/(game.global.titimpLeft>0?2:1)) && getCurrentMapObject().location != "Void"))){ setFormation(4); return;}
-    if (game.global.mapsActive && (getCurrentEnemy(1).name != "Jestimp" && getCurrentEnemy(1).name != "Chronoimp" &&  (hiderwindow < (960*0.4*0.12/mutations.Corruption.statScale(10)/(game.global.titimpLeft>0?2:1)) && getCurrentMapObject().location != "Void"))){ setFormation(2); return;}
-    if (game.global.mapsActive && (getCurrentEnemy(1).name == "Jestimp" || getCurrentEnemy(1).name == "Chronoimp" ||  (hiderwindow > (960/(game.global.titimpLeft>0?2:1)) && getCurrentMapObject().location == "Void"))){ setFormation(4); return;}
+    if (game.global.mapsActive && (getCurrentEnemy(1).name == "Jestimp" || getCurrentEnemy(1).name == "Chronoimp" ||  (hiderwindow > (800*0.45*0.12/mutations.Corruption.statScale(10)/(game.global.titimpLeft>0?2:1)) && getCurrentMapObject().location != "Void"))){ setFormation(4); return;}
+    if (game.global.mapsActive && (getCurrentEnemy(1).name != "Jestimp" && getCurrentEnemy(1).name != "Chronoimp" &&  (hiderwindow < (800*0.45*0.12/mutations.Corruption.statScale(10)/(game.global.titimpLeft>0?2:1)) && getCurrentMapObject().location != "Void"))){ setFormation(2); return;}
+    if (game.global.mapsActive && (getCurrentEnemy(1).name == "Jestimp" || getCurrentEnemy(1).name == "Chronoimp" ||  (hiderwindow > (800/(game.global.titimpLeft>0?2:1)) && getCurrentMapObject().location == "Void"))){ setFormation(4); return;}
     if (!game.global.mapsActive && (hiderwindow > 660)){ setFormation(4); return;}
     
     
