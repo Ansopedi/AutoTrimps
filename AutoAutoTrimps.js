@@ -782,11 +782,10 @@ function buyStorage() {
             jest = simpleSeconds(Bs[B], 45);
             jest = scaleToCurrentMap(jest);
         }
-        if (owned > max * 0.6 || (owned + jest > max * 0.8)) {
+        if (owned > max * 0.8 || (owned + jest > max * 0.9)) {
             // debug('Buying ' + B + '(' + Bs[B] + ') at ' + Math.floor(game.resources[Bs[B]].owned / (game.resources[Bs[B]].max * packMod * 0.99) * 100) + '%');
             if (canAffordBuilding(B) && game.triggers[B].done) {
                 safeBuyBuilding(B);
-                if (getPageSetting('ManualGather')) setGather('buildings');
             }
         }
     }
