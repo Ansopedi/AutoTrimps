@@ -1358,11 +1358,12 @@ function autoMap() {
         voidMapLevelSettingMap = 0; // 93
     if (voidMapLevelSettingMap.length == 1) voidMapLevelSettingMap += "0";  //entering 187.70 becomes 187.7, this will bring it back to 187.70
     var voidsuntil = getPageSetting('RunNewVoidsUntil');
+    var noPrestigeBacklog = ((game.global.world-1)/5)+1<=game.upgrades.Dagadder.allowed+3;
     var badMapHealth = ((game.global.challengeActive == "Daily"&&typeof game.global.dailyChallenge.badMapHealth !== 'undefined')?dailyModifiers.badMapHealth.getMult(game.global.dailyChallenge.badMapHealth.strength):1);
     needToVoid = voidMapLevelSetting > 0 && game.global.totalVoidMaps > 0 && game.global.lastClearedCell + 1 >= voidMapLevelSettingMap && 
                                 ((game.global.world == voidMapLevelSettingZone && !getPageSetting('RunNewVoids')) 
                                                                 || 
-                                 (game.global.world >= voidMapLevelSettingZone && getPageSetting('RunNewVoids'))||hiderwindow < 15*badMapHealth)
+                                 (game.global.world >= voidMapLevelSettingZone && getPageSetting('RunNewVoids'))||(hiderwindow < 15*badMapHealth&&noPrestigeBacklog))
                          && ((voidsuntil != -1 && game.global.world <= voidsuntil) || (voidsuntil == -1) || !getPageSetting('RunNewVoids'));
     if(game.global.totalVoidMaps == 0 || !needToVoid)
         doVoids = false;
