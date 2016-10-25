@@ -1363,7 +1363,7 @@ function autoMap() {
     needToVoid = voidMapLevelSetting > 0 && game.global.totalVoidMaps > 0 && game.global.lastClearedCell + 1 >= voidMapLevelSettingMap && 
                                 ((game.global.world == voidMapLevelSettingZone && !getPageSetting('RunNewVoids')) 
                                                                 || 
-                                 (game.global.world >= voidMapLevelSettingZone && getPageSetting('RunNewVoids'))||(hiderwindow < 15*badMapHealth&&noPrestigeBacklog))
+                                 (game.global.world >= voidMapLevelSettingZone && getPageSetting('RunNewVoids'))||(hiderwindow < 15*badMapHealth && hiderwindow > 5*badMapHealth && noPrestigeBacklog))
                          && ((voidsuntil != -1 && game.global.world <= voidsuntil) || (voidsuntil == -1) || !getPageSetting('RunNewVoids'));
     if(game.global.totalVoidMaps == 0 || !needToVoid)
         doVoids = false;
