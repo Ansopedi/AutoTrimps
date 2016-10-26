@@ -1130,6 +1130,7 @@ function autoStance() {
              //enoughDamage = true; enoughHealth = true; shouldFarm = false;
         }
     }
+	if (game.global.world>=71){
     var badMapHealth = ((game.global.challengeActive == "Daily"&&typeof game.global.dailyChallenge.badMapHealth !== 'undefined')?dailyModifiers.badMapHealth.getMult(game.global.dailyChallenge.badMapHealth.strength):1);
     if (game.global.mapsActive && (getCurrentEnemy(1).name == "Jestimp" || getCurrentEnemy(1).name == "Chronoimp" ||  (hiderwindow > (800*0.45*0.12/mutations.Corruption.statScale(10)/(game.global.titimpLeft>0?2:1)*badMapHealth) && getCurrentMapObject().location != "Void"))){ setFormation(4); return;}
     if (game.global.mapsActive && (getCurrentEnemy(1).name != "Jestimp" && getCurrentEnemy(1).name != "Chronoimp" &&  (hiderwindow < (800*0.45*0.12/mutations.Corruption.statScale(10)/(game.global.titimpLeft>0?2:1)*badMapHealth) && getCurrentMapObject().location != "Void"))){ setFormation(2); return;}
@@ -1138,7 +1139,7 @@ function autoStance() {
     
     
     if (game.global.gridArray.length === 0){ return;}
-    setFormation(2);
+    setFormation(2);}
     
     //baseDamage
     baseDamage = game.global.soldierCurrentAttack * (1 + (game.global.achievementBonus / 100)) * ((game.global.antiStacks * game.portal.Anticipation.level * game.portal.Anticipation.modifier) + 1) * (1 + (game.global.roboTrimpLevel * 0.2));
