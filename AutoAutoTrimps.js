@@ -1536,7 +1536,7 @@ function autoMap() {
         if (selectedMap == "world") {
             //if needPrestige, TRY to find current level map as the highest level map we own.
             if (needPrestige||mapYouSlow )
-                if (game.global.world-1 <= game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].level&&26>=game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].size&&1.85==game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].loot)
+                if (game.global.world-1 <= game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].level&&26>=game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].size&&1.83<=game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].loot)
                     selectedMap = game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].id;
                 else
                     selectedMap = "create";
@@ -1698,7 +1698,7 @@ function autoMap() {
                     debug("Retrying BUYING a Map, level: #" + document.getElementById("mapLevelInput").value, 'th-large');
                     buyMap();
                 }
-                if (26>=game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].size&&1.85==game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].loot){
+                if (26>=game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].size&&1.83<=game.global.mapsOwnedArray[game.global.mapsOwnedArray.length-1].loot){
                     break;
                 }
             }
