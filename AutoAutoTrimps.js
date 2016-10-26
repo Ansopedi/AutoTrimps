@@ -559,7 +559,7 @@ function highlightHousing() {
                 bestBuilding = keysSorted[best];
                 if (hiderwindow < 100.0 && bestBuilding == "Warpstation") {
                     //Warpstation Wall - allow only warps that cost 1/n'th less then current metal (try to save metal for next prestige) 
-                    var costratio = 20;  //(1/4th)                    
+                    var costratio = 500;  //(1/4th)                    
                     if (getBuildingItemPrice(game.buildings.Warpstation, "metal", false, 1) * Math.pow(1 - game.portal.Resourceful.modifier, game.portal.Resourceful.level) > game.resources.metal.owned/costratio)
                         bestBuilding = null;
                 }
