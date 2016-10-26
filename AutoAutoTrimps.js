@@ -557,12 +557,9 @@ function highlightHousing() {
             if (max === false) max = -1;
             if (game.buildings[keysSorted[best]].owned < max || max == -1) {
                 bestBuilding = keysSorted[best];
-                    if (game.buildings.Warpstation.owned >= (Math.floor(game.upgrades.Gigastation.done * getPageSetting('DeltaGigastation')) + getPageSetting('FirstGigastation')))
-                        bestBuilding = null;
-                
-                if ((hiderwindow < 10.0 || getPageSetting('WarpstationWall')) && bestBuilding == "Warpstation") {
+                if ((hiderwindow < 100.0 && bestBuilding == "Warpstation") {
                     //Warpstation Wall - allow only warps that cost 1/n'th less then current metal (try to save metal for next prestige) 
-                    var costratio = 12;  //(1/4th)                    
+                    var costratio = 20;  //(1/4th)                    
                     if (getBuildingItemPrice(game.buildings.Warpstation, "metal", false, 1) * Math.pow(1 - game.portal.Resourceful.modifier, game.portal.Resourceful.level) > game.resources.metal.owned/costratio)
                         bestBuilding = null;
                 }
@@ -600,7 +597,7 @@ function buyBuildings() {
     highlightHousing();
 
     //if housing is highlighted
-    if (bestBuilding !== null && game.global.buildingsQueue.length == 0) {
+    if (bestBuilding !== null) {
         //insert gigastation logic here ###############
         if (!safeBuyBuilding(bestBuilding)) {
             buyFoodEfficientHousing();
