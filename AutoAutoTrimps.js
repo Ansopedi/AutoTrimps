@@ -476,7 +476,7 @@ function initializeAutoTrimps() {
         base = atscript.getAttribute('src').replace(/\/AutoAutoTrimps.js$/, '');
     }
     document.head.appendChild(document.createElement('script')).src = base + '/SettingsUI.js';
-    document.head.appendChild(document.createElement('script')).src = base + '/HiderGraphs.js';
+    document.head.appendChild(document.createElement('script')).src = base + '/Graphs.js';
     document.head.appendChild(document.createElement('script')).src = base + '/AutoAutoPerks.js';
     document.head.appendChild(document.createElement('script')).src = base + '/HiderTrimp.js';
     toggleSettingsMenu();
