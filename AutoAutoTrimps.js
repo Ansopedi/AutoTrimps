@@ -964,7 +964,7 @@ function autoLevelEquipment() {
     }
     //change name to make sure these are local to the function
     var enoughHealthE = !(doVoids && voidCheckPercent > 0) && (baseHealth * 4 > 30 * (enemyDamage - baseBlock / 2 > 0 ? enemyDamage - baseBlock / 2 : enemyDamage * 0.2) || baseHealth > 30 * (enemyDamage - baseBlock > 0 ? enemyDamage - baseBlock : enemyDamage * 0.2));
-    var enoughDamageE = hiderwindow>25;
+    var enoughDamageE = hiderwindow>30;
     
     if (game.global.world == 200) { //&& ((new Date().getTime() - game.global.zoneStarted) / 1000 / 60) > 10 && ((new Date().getTime() - game.global.zoneStarted) / 1000 / 60) < 20){		
     enoughHealthE = false;		
@@ -1391,7 +1391,7 @@ function autoMap() {
     enoughHealth = (baseHealth * 4 > 30 * (enemyDamage - baseBlock / 2 > 0 ? enemyDamage - baseBlock / 2 : enemyDamage * (0.2 + pierceMod))
                     || 
                     baseHealth > 30 * (enemyDamage - baseBlock > 0 ? enemyDamage - baseBlock : enemyDamage * (0.2 + pierceMod)));
-    enoughDamage = hiderwindow>25;
+    enoughDamage = hiderwindow>30;
     HDratio = getEnemyMaxHealth(game.global.world) / baseDamage;
     //prevents map-screen from flickering on and off during startup when base damage is 0.
     if (baseDamage > 0){
