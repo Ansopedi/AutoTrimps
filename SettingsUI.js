@@ -89,7 +89,7 @@ createSetting('MaxGym', 'Max Gyms', '', 'value', '-1',null, 'autoautoDonttouch')
 createSetting('MaxTribute', 'Max Tributes', '', 'value', '-1',null, 'autoautoDonttouch');
 createSetting('MaxNursery', 'Max Nurseries', '', 'value', '-1',null, 'autoautoDonttouch');
 ////Dont touch settings - Really dont touch buttons - Dont touch for real zone
-createSetting('WarpstationCap', 'Limit Trimps', 'Not every one like trimps.', 'boolean', null, null, 'autoautoDonttouch');
+createSetting('GetNurseriesEarly', 'Early Nurseries', 'Run a single map at z23 to unlock Nurseries. ', 'boolean', null, null, 'autoautoDonttouch');
 createSetting('CapEquip', 'Limit Power', 'Not every one need power when they are young', 'boolean', null, null, 'autoautoDonttouch');
 createSetting('LimitEquipment', 'Always Limit Power', 'Not every one need power.', 'boolean', null, null, 'autoautoDonttouch');
 createSetting('AlwaysArmorLvl2', 'Waste Metal', 'Not every one like metal.', 'boolean', null, null, 'autoautoDonttouch');
