@@ -693,45 +693,6 @@ function evaluateEquipmentEfficiency(equipName) {
     //wall (don't buy any more equipment, buy prestige first) is true if the limit equipment option is on and we are past our limit 
     //res = 0 sets the efficiency to 0 so that it will be disregarded. if not, efficiency will still be somenumber that is cheaper, 
     //      and the algorithm will get stuck on whatever equipment we have capped, and not buy other equipment.
-    if (game.jobs[mapresourcetojob[equip.Resource]].locked){
-        //cap any equips that we haven't unlocked metal for (new/fresh game/level1/no helium code)
-        Res = 0;
-        Wall = true;        
-    }
-    if (gameResource.level > 10 - gameResource.prestige && getPageSetting('LimitEquipment')) {
-        Res = 0;
-        Wall = true;
-    }
-    if (gameResource.level >= 10 && getPageSetting('CapEquip')) {
-        Res = 0;
-        Wall = true;
-    }
-    if (game.global.world >= 58 && game.global.world < 60 && getPageSetting('WaitTill60')){
-        Wall = true;
-    }
-    if (gameResource.level < 2 && equip.Stat == 'health' && getPageSetting('AlwaysArmorLvl2')){
-        Res = 9999 - gameResource.prestige;
-    }
-    //manage prestige
-    if (hiderwindow > 20 && game.global.world != 200 && equip.Stat == 'attack' && gameResource.level > 1) {
-        Wall = true;
-    }
-    if (10*Cos > NextCost && equip.Stat == 'attack' && game.global.world > 37 && hiderwindow > 3) {
-        Wall = true;
-    }
-    if ((gameResource.prestige < ((game.global.world-10)/5)+2 && gameResource.level > 2) && (equip.Stat == 'attack') && game.global.world > 37 && hiderwindow > 3) {		
-        Res = 0;
-        Wall = true;
-    }
-    if (gameResource.prestige+1 < ((game.global.world-10)/5)+2 && gameResource.level > 0 && game.global.world > 37 && hiderwindow > 3) {		
-        Res = 0;
-        Wall = true;
-    }
-    if (gameResource.level > 11 && game.global.world != 200 && game.global.world > 37 && (game.global.world < 200 || ( game.global.world > 200 && (4 * Cos) > game.resources.metal.owned))) {		
-        Res = 0;
-        Wall = true;
-    }
-	
     if (game.global.world!=200 && equip.Equip && game.equipment[equipName].level>=5) {		
         Res = 0;
         Wall = true;
