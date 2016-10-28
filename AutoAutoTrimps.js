@@ -1376,7 +1376,7 @@ function autoMap() {
         }		
     }
 
-    if (getPageSetting('GetNurseriesEarly')) {
+    if (getPageSetting('GetNurseriesEarly') && game.global.world == 23 && game.global.mapBonus == 0) {
          shouldDoMaps = true;
      }
     var shouldDoSpireMaps = false;
