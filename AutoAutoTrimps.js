@@ -693,7 +693,7 @@ function evaluateEquipmentEfficiency(equipName) {
     //wall (don't buy any more equipment, buy prestige first) is true if the limit equipment option is on and we are past our limit 
     //res = 0 sets the efficiency to 0 so that it will be disregarded. if not, efficiency will still be somenumber that is cheaper, 
     //      and the algorithm will get stuck on whatever equipment we have capped, and not buy other equipment.
-    if (game.global.world!=200 && equip.Equip && game.equipment[equipName].level>=5) {		
+    if (equip.Equip && game.equipment[equipName].level>=5) {		
         Res = 0;
         Wall = true;
     }
@@ -994,7 +994,7 @@ function autoLevelEquipment() {
             document.getElementById(Best[stat].Name).style.color = Best[stat].Wall ? 'orange' : 'red';
             //If we're considering an attack item, we want to buy weapons if we don't have enough damage, or if we don't need health (so we default to buying some damage)
             if (getPageSetting('BuyWeapons') && DaThing.Stat == 'attack' && (!enoughDamageE || enoughHealthE)) {
-                if ((game.global.world==200||game.equipment[eqName].level<5) && DaThing.Equip && !Best[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
+                if (game.equipment[eqName].level<5) && DaThing.Equip && !Best[stat].Wall && canAffordBuilding(eqName, null, null, true)) {
                     debug('Leveling equipment ' + eqName, '*upload3');
                     buyEquipment(eqName, null, true);
                 }
