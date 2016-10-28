@@ -485,7 +485,7 @@ function initializeAutoTrimps() {
 
 function workerRatios() {
         autoTrimpSettings.FarmerRatio.value = '1';
-        autoTrimpSettings.LumberjackRatio.value = '10';
+        autoTrimpSettings.LumberjackRatio.value = '50';
         autoTrimpSettings.MinerRatio.value = '5000';
 }
 
