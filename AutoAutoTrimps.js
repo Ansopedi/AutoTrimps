@@ -1376,6 +1376,9 @@ function autoMap() {
         }		
     }
 
+    if (getPageSetting('GetNurseriesEarly') {
+         shouldDoMaps = true;
+     }
     var shouldDoSpireMaps = false;
     var needFarmSpire = (((new Date().getTime() - game.global.zoneStarted) / 1000 / 60) < getPageSetting('MinutestoFarmBeforeSpire')) && game.global.mapBonus == 10;
     //Farm X Minutes Before Spire:
