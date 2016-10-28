@@ -507,7 +507,7 @@ function safeBuyBuilding(building) {
     //avoid slow building from clamping
     //buy as many warpstations as we can afford but buys the last warpstations in single.
     if (bestBuilding == "Warpstation") {
-        game.global.buyAmt = 1;
+        game.global.buyAmt = 4;
     } else {
     	game.global.buyAmt = 'Max';
         game.global.maxSplit = 1;
