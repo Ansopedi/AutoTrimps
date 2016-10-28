@@ -1376,7 +1376,7 @@ function autoMap() {
         }		
     }
 
-    if (getPageSetting('GetNurseriesEarly') {
+    if (getPageSetting('GetNurseriesEarly')) {
          shouldDoMaps = true;
      }
     var shouldDoSpireMaps = false;
