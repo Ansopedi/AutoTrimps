@@ -1377,7 +1377,8 @@ function autoMap() {
     }
 
     if (getPageSetting('GetNurseriesEarly') && game.global.world == 25 && game.global.mapBonus == 0) {
-         mapYouSlow = true;
+        shouldDoMaps = true;		
+        mapYouSlow = true;
      }
     var shouldDoSpireMaps = false;
     var needFarmSpire = (((new Date().getTime() - game.global.zoneStarted) / 1000 / 60) < getPageSetting('MinutestoFarmBeforeSpire')) && game.global.mapBonus == 10;
