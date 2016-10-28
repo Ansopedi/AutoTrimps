@@ -681,7 +681,7 @@ function evaluateEquipmentEfficiency(equipName) {
 
                 var NeedResource = NextCost * (Math.pow(Ratio, NeedLevel) - 1) / (Ratio - 1);
 
-                if (game.resources[equip.Resource].owned > NeedResource) {
+                if (game.resources[equip.Resource].owned > NeedResource&&(!(equip.Stat == 'health' && equip.Resource == 'metal')) {
                     Status = 'red';
                 } else {
                     Status = 'orange';
@@ -700,7 +700,7 @@ function evaluateEquipmentEfficiency(equipName) {
 	
     if (equip.Stat == 'health' && equip.Resource == 'metal'){
 	Res = 0;
-        Wall = true;    
+        Wall = false;    
     }
 
     return {
