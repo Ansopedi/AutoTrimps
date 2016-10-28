@@ -698,7 +698,7 @@ function evaluateEquipmentEfficiency(equipName) {
         Wall = true;
     }
 	
-    if (equip.Equip && equip.Stat == 'health' && equip.Resource == 'metal'){
+    if (equip.Stat == 'health' && equip.Resource == 'metal'){
 	Res = 0;
         Wall = true;    
     }
