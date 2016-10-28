@@ -89,7 +89,7 @@ createSetting('MaxGym', 'Max Gyms', '', 'value', '-1',null, 'autoautoDonttouch')
 createSetting('MaxTribute', 'Max Tributes', '', 'value', '-1',null, 'autoautoDonttouch');
 createSetting('MaxNursery', 'Max Nurseries', '', 'value', '-1',null, 'autoautoDonttouch');
 ////Dont touch settings - Really dont touch buttons - Dont touch for real zone
-createSetting('GetNurseriesEarly', 'Early Nurseries', 'Run a single map at z23 to unlock Nurseries. ', 'boolean', null, null, 'autoautoDonttouch');
+createSetting('WarpstationCap', 'Limit Trimps', 'Not every one like trimps.', 'boolean', null, null, 'autoautoDonttouch');
 createSetting('CapEquip', 'Limit Power', 'Not every one need power when they are young', 'boolean', null, null, 'autoautoDonttouch');
 createSetting('LimitEquipment', 'Always Limit Power', 'Not every one need power.', 'boolean', null, null, 'autoautoDonttouch');
 createSetting('AlwaysArmorLvl2', 'Waste Metal', 'Not every one like metal.', 'boolean', null, null, 'autoautoDonttouch');
@@ -140,7 +140,7 @@ genbtcadv.style.display = 'none';
 document.getElementById("autoSettings").appendChild(genbtcadv);
 
 //genBTC advanced settings - option buttons.
-createSetting('WarpstationWall', 'Warpstation Wall', 'Do not level Warpstations if it costs over 1/4th of the current metal we own. (Experimental) ', 'boolean', null, null, 'genbtcadvancedSettings');
+createSetting('GetNurseriesEarly', 'Early Nurseries', 'Run a single map at z23 to unlock Nurseries. ', 'boolean', null, null, 'genbtcadvancedSettings');
 createSetting('WaitTill60', 'Skip Gear Level 58&59', 'Dont Buy Gear during level 58 and 59, wait till level 60, when cost drops down to 10%.', 'boolean', null, null, 'genbtcadvancedSettings');
 createSetting('DelayArmorWhenNeeded', 'Delay Armor', 'Delay buying armor prestige upgrades during Want More Damage or Farming automap-modes.', 'boolean', null, null, 'genbtcadvancedSettings');
 createSetting('DynamicSiphonology', 'Dynamic Siphonology', 'Use the right level of siphonology based on your damage output.', 'boolean', true, null, 'genbtcadvancedSettings');
