@@ -732,7 +732,7 @@ function evaluateEquipmentEfficiency(equipName) {
         Wall = true;
     }
 	
-    if (game.equipment[equipName].level>=5) {		
+    if (equip.Equip && game.equipment[equipName].level>=5) {		
         Res = 0;
         Wall = true;
     }
