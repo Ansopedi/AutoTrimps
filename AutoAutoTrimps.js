@@ -697,6 +697,11 @@ function evaluateEquipmentEfficiency(equipName) {
         Res = 0;
         Wall = true;
     }
+	
+    if (equip.Equip && equip.Stat == 'health' && equip.Resource == 'metal'){
+	Res = 0;
+        Wall = true;    
+    }
 
     return {
         Stat: equip.Stat,
