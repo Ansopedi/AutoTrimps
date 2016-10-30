@@ -1033,6 +1033,7 @@ function autoStance() {
     baseDamage = game.global.soldierCurrentAttack * (1 + (game.global.achievementBonus / 100)) * ((game.global.antiStacks * game.portal.Anticipation.level * game.portal.Anticipation.modifier) + 1) * (1 + (game.global.roboTrimpLevel * 0.2)*(1+game.goldenUpgrades.Battle.currentBonus));
 	baseDamage /= (game.global.challengeActive == "Daily"&&typeof game.global.dailyChallenge.badHealth !== 'undefined')?dailyModifiers.badHealth.getMult(game.global.dailyChallenge.badHealth.strength):1;
 	baseDamage *= (game.global.world%2===1&&game.global.challengeActive == "Daily"&&typeof game.global.dailyChallenge.oddTrimpNerf!== 'undefined')?dailyModifiers.oddTrimpNerf.getMult(game.global.dailyChallenge.oddTrimpNerf.strength):1;
+	baseDamage *= (game.global.world%2===0&&game.global.challengeActive == "Daily"&&typeof game.global.dailyChallenge.evenTrimpBuff!== 'undefined')?dailyModifiers.evenTrimpBuff.getMult(game.global.dailyChallenge.evenTrimpBuff.strength):1;
     	if (game.global.formation == 0) {
     		baseDamage *= 4;
     	} else if (game.global.formation != "2") {
@@ -1302,11 +1303,12 @@ function autoMap() {
     var voidsuntil = getPageSetting('RunNewVoidsUntil');
     var noPrestigeBacklog = (((game.global.world-1)/5)<=game.upgrades.Dagadder.allowed+2&&game.upgrades.Dagadder.done<game.upgrades.Dagadder.allowed)||game.upgrades.Dagadder.done+2<game.upgrades.Dagadder.allowed;
     var oddNerf = (game.global.world%2===1&&game.global.challengeActive == "Daily"&&typeof game.global.dailyChallenge.oddTrimpNerf!== 'undefined');
+    var evenBuff = (game.global.challengeActive == "Daily"&&typeof game.global.dailyChallenge.evenTrimpBuff!== 'undefined');
     var badMapHealth = ((game.global.challengeActive == "Daily"&&typeof game.global.dailyChallenge.badMapHealth !== 'undefined')?dailyModifiers.badMapHealth.getMult(game.global.dailyChallenge.badMapHealth.strength):1);
     needToVoid = voidMapLevelSetting > 0 && game.global.totalVoidMaps > 0 && game.global.lastClearedCell + 1 >= voidMapLevelSettingMap && 
                                 ((game.global.world == voidMapLevelSettingZone && !getPageSetting('RunNewVoids')) 
                                                                 || 
-                                 (game.global.world >= voidMapLevelSettingZone && getPageSetting('RunNewVoids'))||(hiderwindow < 15*badMapHealth && hiderwindow > 5*badMapHealth && noPrestigeBacklog &&!oddNerf))
+                                 (game.global.world >= voidMapLevelSettingZone && getPageSetting('RunNewVoids'))||(hiderwindow < 15*badMapHealth && hiderwindow > 5*badMapHealth && noPrestigeBacklog &&!oddNerf &&(!evenBuff||game.global.world%2===0)))
                          && ((voidsuntil != -1 && game.global.world <= voidsuntil) || (voidsuntil == -1) || !getPageSetting('RunNewVoids'));
     if(game.global.totalVoidMaps == 0 || !needToVoid)
         doVoids = false;
@@ -1952,6 +1954,7 @@ function useScryerStance() {
     	baseDamage = game.global.soldierCurrentAttack * (1 + (game.global.achievementBonus / 100)) * ((game.global.antiStacks * game.portal.Anticipation.level * game.portal.Anticipation.modifier) + 1) * (1 + (game.global.roboTrimpLevel * 0.2)*(1+game.goldenUpgrades.Battle.currentBonus));
 	baseDamage /= (game.global.challengeActive == "Daily"&&typeof game.global.dailyChallenge.badHealth !== 'undefined')?dailyModifiers.badHealth.getMult(game.global.dailyChallenge.badHealth.strength):1;
 	baseDamage *= (game.global.world%2===1&&game.global.challengeActive == "Daily"&&typeof game.global.dailyChallenge.oddTrimpNerf!== 'undefined')?dailyModifiers.oddTrimpNerf.getMult(game.global.dailyChallenge.oddTrimpNerf.strength):1;
+	baseDamage *= (game.global.world%2===0&&game.global.challengeActive == "Daily"&&typeof game.global.dailyChallenge.evenTrimpBuff!== 'undefined')?dailyModifiers.evenTrimpBuff.getMult(game.global.dailyChallenge.evenTrimpBuff.strength):1;
     	if (game.global.formation == 0) {
     		baseDamage *= 4;
     	} else if (game.global.formation != "2") {
