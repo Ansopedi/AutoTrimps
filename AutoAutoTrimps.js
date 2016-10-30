@@ -1551,7 +1551,7 @@ function autoMap() {
                     || (game.global.challengeActive == 'Lead' && game.global.lastClearedCell > 93) 
                     || (doVoids && (game.global.lastClearedCell > 93 || getPageSetting('VoidMaps') > 350))
                     )
-                )|| ((game.global.lastBreedTime >= 30000||game.global.lastBreedTime >=game.global.GeneticistassistSetting||getBreedTime(true)==0) && mapYouSlow)){
+                )|| ((game.global.lastBreedTime >= 30000||game.global.lastBreedTime >=game.global.GeneticistassistSetting*1000||getBreedTime(true)==0) && mapYouSlow)){
                 mapsClicked();
             }
         }
