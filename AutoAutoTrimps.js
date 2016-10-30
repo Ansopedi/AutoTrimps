@@ -2097,8 +2097,7 @@ function mainLoop() {
     if (getPageSetting('BuyStorage')) buyStorage();     //"Buy Storage"
     if (getPageSetting('BuyBuildings')) buyBuildings(); //"Buy Buildings"
     if (getPageSetting('BuyJobs')) buyJobs();           //"Buy Jobs"    
-    if (getPageSetting('ManualGather')) manualLabor();  //"Auto Gather/Build"
-    if (getPageSetting('AutoMaps')) autoMap();          //"Auto Maps"    
+    if (getPageSetting('ManualGather')) manualLabor();  //"Auto Gather/Build"  
     if (autoTrimpSettings.AutoPortal.selected != "Off") autoPortal();   //"Auto Portal" (hidden until level 60)
     if (getPageSetting('TrapTrimps') && game.global.trapBuildAllowed && game.global.trapBuildToggled == false) toggleAutoTrap(); //"Trap Trimps"
     if (getPageSetting('AutoRoboTrimp')) autoRoboTrimp();   //"AutoRoboTrimp" (genBTC settings area)
@@ -2107,6 +2106,7 @@ function mainLoop() {
         useScryerStance();                                  //"Use Scryer Stance"
     else
     	autoStance();                                           //"Auto Stance"
+    if (getPageSetting('AutoMaps')) autoMap();          //"Auto Maps"  
     getNiceThingsDone();					//Paint things.
     if (getPageSetting('AutoFight')) fightManual();//betterAutoFight();     //"Better Auto Fight"
     if (getPageSetting('DynamicPrestige')) prestigeChanging2(); //"Dynamic Prestige" (genBTC settings area)
