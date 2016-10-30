@@ -1541,21 +1541,15 @@ function autoMap() {
                 mapsClicked();
             }
             //Get Impatient/Abandon if: (need prestige / _NEED_ to do void maps / on lead in odd world.) AND (a new army is ready, OR _need_ to void map OR lead farming and we're almost done with the zone)
-            if((
+            if(
                 game.global.switchToMaps 
                 && 
-                (doVoids || (game.global.challengeActive == 'Lead' && game.global.world % 2 == 1)) 
-                && 
-                    (
-                    (game.resources.trimps.realMax() <= game.resources.trimps.owned + 1)
-                    || (game.global.challengeActive == 'Lead' && game.global.lastClearedCell > 93) 
-                    || (doVoids && (game.global.lastClearedCell > 93 || getPageSetting('VoidMaps') > 350))
-                    )
-                )|| ((game.global.lastBreedTime >= 30000||game.global.lastBreedTime >=game.global.GeneticistassistSetting*1000||getBreedTime(true)==0) && mapYouSlow)){
+                (doVoids || mapYouSlow) 
+                && (game.global.lastBreedTime >= 30000||game.global.lastBreedTime >=game.global.GeneticistassistSetting*1000||getBreedTime(true)==0)){
                 mapsClicked();
             }
         }
-    } else if (game.global.preMapsActive) {
+    } if (game.global.preMapsActive) {
         if (selectedMap == "world") {
             mapsClicked();  //go back
         } 
