@@ -297,28 +297,6 @@ function PrestigeValue(what) {
     return toReturn;
 }
 
-function getScienceCostToUpgrade(upgrade) {
-    var upgradeObj = game.upgrades[upgrade];
-    if (upgradeObj.cost.resources.science !== undefined ? upgradeObj.cost.resources.science[0] !== undefined : false) {
-        return Math.floor(upgradeObj.cost.resources.science[0] * Math.pow(upgradeObj.cost.resources.science[1], (upgradeObj.done)));
-    } else if (upgradeObj.cost.resources.science !== undefined && upgradeObj.cost.resources.science[0] == undefined){
-        return upgradeObj.cost.resources.science;
-    } else {
-        return 0;
-    }
-}
-
-function setScienceNeeded() {
-    scienceNeeded = 0;
-    for (var upgrade in upgradeList) {
-        upgrade = upgradeList[upgrade];
-        if (game.upgrades[upgrade].allowed > game.upgrades[upgrade].done) { //If the upgrade is available
-            if (game.global.world == 1 && game.global.totalHeliumEarned<=100 && upgrade.startsWith("Speed")) continue;  //skip speed upgrades on fresh game until level 2
-            scienceNeeded += getScienceCostToUpgrade(upgrade);
-        }
-    }
-}
-
 function setTitle() {
     document.title = '(' + game.global.world + ')' + ' Trimps ' + document.getElementById('versionNumber').innerHTML;
     //for the dummies like me who always forget to turn automaps back on after portaling
@@ -553,59 +531,19 @@ function highlightHousing() {
     game.global.buyAmt = oldBuy;
 }
 
-//Helper function to buy best "Food" Buildings
-function buyFoodEfficientHousing() {
-    // Push the limit auto change your max buildings settings		
-    autoTrimpSettings.MaxHut.value = game.global.world < 35 ? 50 : game.global.world*2.3; //10+game.buildings.House.owned;2.5		
-    autoTrimpSettings.MaxHouse.value = game.global.world < 35 ? 50 : game.global.world*2.6;		
-    autoTrimpSettings.MaxMansion.value = game.global.world < 35 ? 50 : game.global.world*2.8; //20+game.buildings.House.owned;2.9		
-    autoTrimpSettings.MaxHotel.value = game.global.world < 35 ? 50 : game.global.world*3; //30+game.buildings.House.owned;3.1		
-    autoTrimpSettings.MaxResort.value = game.global.world < 35 ? 50 : game.global.world*3.2; //40+game.buildings.House.owned; 3.3		
-    autoTrimpSettings.MaxGateway.value = game.global.world < 35 ? 25 : game.global.world*0.8;
-    var houseWorth = game.buildings.House.locked ? 0 : game.buildings.House.increase.by / getBuildingItemPrice(game.buildings.House, "food", false, 1);
-    var hutWorth = game.buildings.Hut.increase.by / getBuildingItemPrice(game.buildings.Hut, "food", false, 1);
-    var hutAtMax = (game.buildings.Hut.owned >= autoTrimpSettings.MaxHut.value && autoTrimpSettings.MaxHut.value != -1);
-}
-
-//Main Decision Function that determines cost efficiency and Buys all housing (gems), or calls buyFoodEfficientHousing, and also non-storage buildings (Gym,Tribute,Nursery)s
 function buyBuildings() {
     if(game.global.world!=1 && ((game.jobs.Miner.locked && game.global.challengeActive != 'Metal') || (game.jobs.Scientist.locked && game.global.challengeActive != "Scientist")))
         return;
     highlightHousing();
 
-    //if housing is highlighted
-    if (bestBuilding !== null) {
-        //insert gigastation logic here ###############
-        if (!safeBuyBuilding(bestBuilding)) {
-            buyFoodEfficientHousing();
-        }
-    } else {
-        buyFoodEfficientHousing();
-    }
-    
-    if(getPageSetting('MaxWormhole') > 0 && game.buildings.Wormhole.owned < getPageSetting('MaxWormhole') && !game.buildings.Wormhole.locked) safeBuyBuilding('Wormhole');
-
-    //Buy non-housing buildings
-    if (!game.buildings.Gym.locked && (getPageSetting('MaxGym') > game.buildings.Gym.owned || getPageSetting('MaxGym') == -1)) {
-       //safeBuyBuilding('Gym');
-    }
     if (!game.buildings.Tribute.locked && (getPageSetting('MaxTribute') > game.buildings.Tribute.owned || getPageSetting('MaxTribute') == -1)) {
         safeBuyBuilding('Tribute');
     }
-    var targetBreed = parseInt(getPageSetting('GeneticistTimer'));
-    //only buy nurseries if enabled,   and we need to lower our breed time, or our target breed time is 0, or we aren't trying to manage our breed time before geneticists, and they aren't locked
-    //even if we are trying to manage breed timer pre-geneticists, start buying nurseries once geneticists are unlocked AS LONG AS we can afford a geneticist (to prevent nurseries from outpacing geneticists soon after they are unlocked)
-    if ((targetBreed < getBreedTime() || targetBreed == 0 || !getPageSetting('ManageBreedtimer') || 
-        (targetBreed < getBreedTime(true) && game.global.challengeActive == 'Watch') ||
-        (!game.jobs.Geneticist.locked && canAffordJob('Geneticist', false))) && !game.buildings.Nursery.locked) 
-    {
         if ((getPageSetting('MaxNursery') > game.buildings.Nursery.owned || getPageSetting('MaxNursery') == -1) && 
-            (getBuildingItemPrice(game.buildings.Nursery, "wood", false, 1) < game.resources.wood.owned/50) && 
-            (getBuildingItemPrice(game.buildings.Nursery, "gems", false, 1) < 0.05 * getBuildingItemPrice(game.buildings.Collector, "gems", false, 1) || game.buildings.Collector.locked || !game.buildings.Warpstation.locked))
+            (getBuildingItemPrice(game.buildings.Nursery, "wood", false, 1) < game.resources.wood.owned/50))
         {
             safeBuyBuilding('Nursery');
         }
-    }
 }
 
 //Back end function for autoLevelEquipment to determine most cost efficient items, and what color they should be.
@@ -746,48 +684,6 @@ function buyJobs() {
     var minerRatio = parseInt(getPageSetting('MinerRatio'));
     var totalRatio = farmerRatio + lumberjackRatio + minerRatio;
     var scientistRatio = farmerRatio / 25;
-    if (game.jobs.Farmer.owned < 100) {
-        scientistRatio = totalRatio / 10;
-    }
-    
-    //FRESH GAME LEVEL 1 CODE
-    if (game.global.world == 1 && game.global.totalHeliumEarned<=100){
-        if (game.resources.trimps.owned < game.resources.trimps.realMax() * 0.9){
-            if (game.resources.food.owned > 5 && freeWorkers > 0){
-                if (game.jobs.Farmer.owned == game.jobs.Lumberjack.owned)
-                    safeBuyJob('Farmer', 1);
-                else if (game.jobs.Farmer.owned > game.jobs.Lumberjack.owned && !game.jobs.Lumberjack.locked)
-                    safeBuyJob('Lumberjack', 1);
-            }
-            if (game.resources.food.owned > 20 && freeWorkers > 0){
-                if (game.jobs.Farmer.owned == game.jobs.Lumberjack.owned && !game.jobs.Miner.locked)
-                    safeBuyJob('Miner', 1);
-            }
-        }
-        return;
-    }
-    
-    if (game.global.challengeActive == 'Watch'){
-        scientistRatio = totalRatio / 10;
-        stopScientistsatFarmers = 1e8;
-        if (game.resources.trimps.owned < game.resources.trimps.realMax() * 0.9 && !breedFire){
-            //so the game buys scientists first while we sit around waiting for breed timer.
-            var buyScientists = Math.floor((scientistRatio / totalRatio * totalDistributableWorkers) - game.jobs.Scientist.owned);
-            if (game.jobs.Scientist.owned < buyScientists && game.resources.trimps.owned > game.resources.trimps.realMax() * 0.1){
-                var toBuy = buyScientists-game.jobs.Scientist.owned;
-                var canBuy = Math.floor(trimps.owned - trimps.employed);
-                if(buyScientists > 0 && freeWorkers > 0)
-                    safeBuyJob('Scientist',toBuy <= canBuy ? toBuy : canBuy);
-            }
-            else
-                return;
-        }
-    }
-    else
-    {   //exit if we are havent bred to at least 90% breedtimer yet...
-        if (game.resources.trimps.owned < game.resources.trimps.realMax() * 0.9 && !breedFire) return;
-    }
-    
     var oldBuy = game.global.buyAmt;
     if (game.jobs.Explorer.owned < getPageSetting('MaxExplorers') || getPageSetting('MaxExplorers') == -1) {
         game.global.buyAmt = 1;
@@ -1785,97 +1681,6 @@ function doPortal(challenge) {
     pastUpgradesBtn = viewPortalUpgrades();
     activatePortalBtn = activateClicked();
 }
-
-//Controls "Manage Breed Timer" and "Genetecist Timer" - adjust geneticists to reach desired breed timer
-
-
-//Change prestiges as we go (original idea thanks to Hider)
-//The idea is like this. We will stick to Dagger until the end of the run, then we will slowly start grabbing prestiges, so we can hit the Prestige we want by the last zone.
-//The keywords below "Dagadder" and "GambesOP" are merely representative of the minimum and maximum values. Toggling these on and off, the script will take care of itself, when set to min (Dagger) or max (Gambeson).
-//In this way, we will achieve the desired "maxPrestige" setting (which would be somewhere in the middle, like Polearm) by the end of the run. (instead of like in the past where it was gotten from the beginning and wasting time in early maps.)
-//Function originally written by Hyppy (in July 2016)
-function prestigeChanging2(){
-     //find out the equipment index of the prestige we want to hit at the end.
-     var maxPrestigeIndex = document.getElementById('Prestige').selectedIndex;
-    // Cancel dynamic prestige logic if maxPrestigeIndex is less than or equal to 2 (dagger)
-    if (maxPrestigeIndex <= 2)
-        return;
-        
-     //find out the last zone (checks custom autoportal and challenge's portal zone)
-     var lastzone = checkSettings() - 1; //subtract 1 because the function adds 1 for its own purposes.
-     
-     //if we can't figure out lastzone (likely Helium per Hour AutoPortal setting), then use the last run's Portal zone.
-     if (lastzone < 0)
-         lastzone = game.global.lastPortal;
-     
-    // Find total prestiges needed by determining current prestiges versus the desired prestiges by the end of the run
-    var neededPrestige = 0;
-    for (i = 1; i <= maxPrestigeIndex ; i++){
-        var lastp = game.mapUnlocks[autoTrimpSettings.Prestige.list[i]].last;
-        if (lastp <= lastzone){
-            var addto = Math.ceil((lastzone + 1 - lastp)/5);
-            // For Scientist IV bonus, halve the required prestiges to farm
-            if (game.global.sLevel > 3)
-                addto += Math.ceil(addto/2);
-            neededPrestige += addto;                
-        }
-    }
-    // For Lead runs, we hack this by doubling the neededPrestige to acommodate odd zone-only farming. This might overshoot a bit
-    if (game.global.challengeActive == 'Lead')  
-        neededPrestige *= 2;
-    
-    // Determine the number of zones we want to farm.  We will farm 4 maps per zone, then ramp up to 9 maps by the final zone
-    var zonesToFarm = 0;
-    if (neededPrestige == 0){
-        autoTrimpSettings.Prestige.selected = "Dagadder";
-        return;
-    }
-    else if (neededPrestige <= 9)//next 9
-        zonesToFarm = 1;
-    else if (neededPrestige <= 17)//next 8
-        zonesToFarm = 2;
-    else if (neededPrestige <= 24)//next 7
-        zonesToFarm = 3;
-    else if (neededPrestige <= 30)//next 6
-        zonesToFarm = 4;
-    else if (neededPrestige <= 35)//next 5
-        zonesToFarm = 5;
-    else
-        zonesToFarm = 6 + Math.ceil((neededPrestige - 35)/5);
- 
-    //If we are in the zonesToFarm threshold, kick off the prestige farming
-    if(game.global.world > (lastzone-zonesToFarm) && game.global.lastClearedCell < 79){
-        // Default map bonus threshold
-        var mapThreshold = 4;
-        var zonegap = lastzone - game.global.world;
-        if (zonegap <= 4)// Would be +5 but the map repeat button stays on for 1 extra.
-            mapThreshold += zonegap;
-
-        if (game.global.mapBonus < mapThreshold)
-             autoTrimpSettings.Prestige.selected = "GambesOP";
-         else if (game.global.mapBonus >= mapThreshold)
-             autoTrimpSettings.Prestige.selected = "Dagadder";
-    }
-            
-    //If we are not in the prestige farming zone (the beginning of the run), use dagger:
-    if (game.global.world <= lastzone-zonesToFarm || game.global.mapBonus == 10)  
-     autoTrimpSettings.Prestige.selected = "Dagadder";
-}
-
-//Activate Robo Trimp
-function autoRoboTrimp() {
-    //exit if the cooldown is active, or we havent unlocked robotrimp.
-    if (game.global.roboTrimpCooldown > 0 || !game.global.roboTrimpLevel) return;
-    var robotrimpzone = parseInt(getPageSetting('AutoRoboTrimp'));
-    //exit if we have the setting set to 0
-    if (robotrimpzone == 0) return;
-    //activate the button when we are above the cutoff zone, and we are out of cooldown (and the button is inactive)
-    if (game.global.world >= robotrimpzone && !game.global.useShriek){
-        magnetoShriek();
-        debug("Activated Robotrimp Ability", '*podcast');
-    }
-}
-
 //Version 3.6 Golden Upgrades
 function autoGoldenUpgrades() {
     //get the numerical value of the selected index of the dropdown box
@@ -1887,143 +1692,6 @@ function autoGoldenUpgrades() {
      	buyGoldenUpgrade("Battle");
      }
     buyGoldenUpgrade(setting);
-}
-
-//Handles manual fighting automatically, in a different way.
-function betterAutoFight() {
-    //Manually fight instead of using builtin auto-fight
-    if (game.global.autoBattle) {
-        if (!game.global.pauseFight) {
-            //pauseFight(); //Disable autofight
-        }
-    }
-    lowLevelFight = game.resources.trimps.maxSoldiers < (game.resources.trimps.owned - game.resources.trimps.employed) * 0.5 && (game.resources.trimps.owned - game.resources.trimps.employed) > game.resources.trimps.realMax() * 0.1 && game.global.world < 5 && game.global.sLevel > 0;
-    if (game.upgrades.Battle.done && !game.global.fighting && game.global.gridArray.length !== 0 && !game.global.preMapsActive && (game.resources.trimps.realMax() <= game.resources.trimps.owned + 1 || game.global.soldierHealth > 0 || lowLevelFight || game.global.challengeActive == 'Watch')) {
-        fightManual();
-    }
-    //Click Fight if we are dead and already have enough for our breed timer, and fighting would not add a significant amount of time
-    if (!game.global.fighting && getBreedTime() < 2 && (game.global.lastBreedTime/1000) > autoTrimpSettings.GeneticistTimer.value && game.global.soldierHealth == 0)
-        fightManual();
-}
-
-//Exits the Spire after completing the specified cell.
-function exitSpireCell() {    
-    if(game.global.world == 200 && game.global.spireActive && game.global.lastClearedCell >= getPageSetting('ExitSpireCell')-1) 
-        endSpire();    
-}
-
-//use S stance
-function useScryerStance() {
-	
-    	//Scryer if Overkill
-    	//calculate internal script variables normally processed by autostance.
-    	//baseDamage
-    	baseDamage = game.global.soldierCurrentAttack * (1 + (game.global.achievementBonus / 100)) * ((game.global.antiStacks * game.portal.Anticipation.level * game.portal.Anticipation.modifier) + 1) * (1 + (game.global.roboTrimpLevel * 0.2)*(1+game.goldenUpgrades.Battle.currentBonus));
-	baseDamage /= (game.global.challengeActive == "Daily"&&typeof game.global.dailyChallenge.badHealth !== 'undefined')?dailyModifiers.badHealth.getMult(game.global.dailyChallenge.badHealth.strength):1;
-	baseDamage *= (game.global.world%2===1&&game.global.challengeActive == "Daily"&&typeof game.global.dailyChallenge.oddTrimpNerf!== 'undefined')?dailyModifiers.oddTrimpNerf.getMult(game.global.dailyChallenge.oddTrimpNerf.strength):1;
-	baseDamage *= (game.global.world%2===0&&game.global.challengeActive == "Daily"&&typeof game.global.dailyChallenge.evenTrimpBuff!== 'undefined')?dailyModifiers.evenTrimpBuff.getMult(game.global.dailyChallenge.evenTrimpBuff.strength):1;
-    	if (game.global.formation == 0) {
-    		baseDamage *= 4;
-    	} else if (game.global.formation != "2") {
-    	    baseDamage *= 8;
-    	}
-    	//baseBlock
-    	baseBlock = game.global.soldierCurrentBlock;
-    	if (game.global.formation == 0) {
-        	baseBlock *= 2;
-    	} else if (game.global.formation != "3") {
-    	    baseBlock *= 8;
-    	}
-    	//baseHealth
-    	baseHealth = game.global.soldierHealthMax;
-    	if (game.global.formation == 0) {
-        	baseHealth *= 2;
-    	} else if (game.global.formation != "1") {
-    	    baseHealth *= 8;
-    	}
-    var ovklHDratio;
-    var useoverkill = true; //!!getPageSetting('ScryerUseWhenOverkill');
-    if (useoverkill && game.portal.Overkill.level == 0)
-        setPageSetting('ScryerUseWhenOverkill',false);
-    //Overkill button being on and being able to overkill in S will override any other setting, regardless.
-    if (useoverkill && game.portal.Overkill.level > 0) {
-        var avgDamage = baseDamage;
-        var ovkldmg = avgDamage;
-        //are we going to overkill in S?
-        ovklHDratio = ovkldmg/(getEnemyMaxHealth(game.global.world,1,true));
-        hiderwindow = ovklHDratio;
-        Area51i = ovkldmg;
-        Area60i = getEnemyMaxHealth(game.global.world,1,true);
-        armorValue = ((baseHealth/8)/(getEnemyMaxAttack(game.global.world, 95, 'Snimp',0)*mutations.Corruption.statScale(3)));
-        armorTempValue = (game.global.soldierHealth/(getEnemyMaxAttack(game.global.world, 95, 'Snimp',0)*mutations.Corruption.statScale(3)));
-        if (hiderwindow > 120) { // && game.global.world < getPageSetting('VoidMaps')
-             //enoughDamage = true; enoughHealth = true; shouldFarm = false;
-        }
-    //quit here if its right
-    }
-    if (game.global.preMapsActive || (!game.global.preMapsActive && game.global.mapsActive && getCurrentMapObject().location == "Void") || hiderwindow < 20 || HDratio > 7 || (game.global.spireActive && game.global.lastClearedCell > 77) || game.global.gridArray.length === 0 || game.global.highestLevelCleared < 180 || (hiderwindow < 20 && game.global.lastClearedCell == 98)) { autoStance(); return;
-    }
-    //if (ovklHDratio > 0.9) {
-      //  setFormation(4);
-        //return;
-    //}
-
-    //grab settings variables
-    var useinmaps = getPageSetting('ScryerUseinMaps');
-    var useinvoids = getPageSetting('ScryerUseinVoidMaps');
-    var useinspire = getPageSetting('ScryerUseinSpire');
-    //var useinspiresafes = getPageSetting('ScryerUseinSpireSafes');
-    var minzone = getPageSetting('ScryerMinZone');
-    var maxzone = getPageSetting('ScryerMaxZone');
-    
-    //decide if we are going to use it.
-    var mapcheck = game.global.mapsActive;
-    var run = !mapcheck;    //initially set run with the opposite of "are we in a map" (if false, run will be true which means "run if we are in world")
-    if (mapcheck) {
-        //if we are in a map, set to check if he wants to use S in maps.
-        run = useinmaps;
-        //if we are in a void, set to check if he wants to use S in voids.
-        if (!game.global.preMapsActive && game.global.mapsActive && getCurrentMapObject().location != "Void")
-            run = useinvoids;
-    }
-    else {
-        //if we aren't in a map, are we in spire? if not, just go with run in world.
-        var spirecheck = (game.global.world == 200 && game.global.spireActive);
-        run = spirecheck ? useinspire : run;
-    }
-    if ((!game.global.mapsActive && !game.global.preMapsActive && game.global.gridArray.length > 0 && ((hiderwindow == 20 && game.global.lastClearedCell == 98) || game.global.lastClearedCell < 98)) && ((!getCurrentEnemy(1).corrupted && hiderwindow > 20) ||
-    	(!getCurrentEnemy(2).corrupted && 4*baseDamage*getPlayerCritDamageMult() > getCurrentEnemy().health/2 && hiderwindow > 20))) {
-    	setFormation(4);
-    	return;
-    }
-    if (game.global.mapsActive && run == true && game.global.world >= 60 && (game.global.world >= minzone || minzone <= 0) && (game.global.world < maxzone || maxzone <= 0)) {
-        setFormation(4);    //set the S stance
-        //calculate internal script variables normally processed by autostance.
-        
-        //baseDamage
-    	baseDamage = game.global.soldierCurrentAttack * (1 + (game.global.achievementBonus / 100)) * ((game.global.antiStacks * game.portal.Anticipation.level * game.portal.Anticipation.modifier) + 1) * (1 + (game.global.roboTrimpLevel * 0.2));
-    	if (game.global.formation == 0) {
-    		baseDamage *= 2;
-    	} else if (game.global.formation != "2") {
-    	    baseDamage *= 8;
-    	}
-    	//baseBlock
-    	baseBlock = game.global.soldierCurrentBlock;
-    	if (game.global.formation == 0) {
-        	baseBlock *= 2;
-    	} else if (game.global.formation != "3") {
-    	    baseBlock *= 8;
-    	}
-    	//baseHealth
-    	baseHealth = game.global.soldierHealthMax;
-    	if (game.global.formation == 0) {
-        	baseHealth *= 2;
-    	} else if (game.global.formation != "1") {
-    	    baseHealth *= 8;
-    	}
-    } else {
-        autoStance();    //falls back to autostance when not using S. 
-    }
 }
 
 ////////////////////////////////////////
@@ -2062,12 +1730,10 @@ function mainLoop() {
     //auto-close the Spire notification checkbox
     if(document.getElementById('tipTitle').innerHTML == 'Spire') cancelTooltip();
     setTitle();          //set the browser title
-    setScienceNeeded();  //determine how much science is needed
     updateValueFields(); //refresh the UI
     updateValueFields2(); //refresh the UI2
     updateValueFields3(); //refresh the UI2
 
-    if (getPageSetting('ExitSpireCell')) exitSpireCell(); //"Exit Spire After Cell" (genBTC settings area)
     if (getPageSetting('WorkerRatios')) workerRatios(); //"Auto Worker Ratios"
     if (getPageSetting('BuyUpgrades')) buyUpgrades();   //"Buy Upgrades"
     autoGoldenUpgrades();                               //"AutoGoldenUpgrades" (genBTC settings area)
@@ -2077,16 +1743,11 @@ function mainLoop() {
     if (getPageSetting('ManualGather')) manualLabor();  //"Auto Gather/Build"  
     if (autoTrimpSettings.AutoPortal.selected != "Off") autoPortal();   //"Auto Portal" (hidden until level 60)
     if (getPageSetting('TrapTrimps') && game.global.trapBuildAllowed && game.global.trapBuildToggled == false) toggleAutoTrap(); //"Trap Trimps"
-    if (getPageSetting('AutoRoboTrimp')) autoRoboTrimp();   //"AutoRoboTrimp" (genBTC settings area)
     autoLevelEquipment();                                   //"Buy Armor", "Buy Armor Upgrades", "Buy Weapons","Buy Weapons Upgrades"
-    if (getPageSetting('UseScryerStance')) 
-        useScryerStance();                                  //"Use Scryer Stance"
-    else
-    	autoStance();                                           //"Auto Stance"
+    autoStance();                                           //"Auto Stance"
     if (getPageSetting('AutoMaps')) autoMap();          //"Auto Maps"  
     getNiceThingsDone();					//Paint things.
     if (getPageSetting('AutoFight')) fightManual();//betterAutoFight();     //"Better Auto Fight"
-    if (getPageSetting('DynamicPrestige')) prestigeChanging2(); //"Dynamic Prestige" (genBTC settings area)
     else autoTrimpSettings.Prestige.selected = document.getElementById('Prestige').value; //if we dont want to, just make sure the UI setting and the internal setting are aligned.
     
     //track how many overkill world cells we have beaten in the current level. (game.stats.cellsOverkilled.value for the entire run)
