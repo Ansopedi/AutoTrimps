@@ -17,7 +17,7 @@ var enableDebug = true; //Spam console
 var autoTrimpSettings = {};
 var bestBuilding;
 var scienceNeeded;
-var breedFire = false;
+var breedFire = true;
 var shouldFarm = false;
 var enoughDamage = true;
 var enoughHealth = true;
