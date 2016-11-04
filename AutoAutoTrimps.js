@@ -686,6 +686,48 @@ function buyJobs() {
     var minerRatio = parseInt(getPageSetting('MinerRatio'));
     var totalRatio = farmerRatio + lumberjackRatio + minerRatio;
     var scientistRatio = farmerRatio / 25;
+    if (game.jobs.Farmer.owned < 100) {
+        scientistRatio = totalRatio / 10;
+    }
+    
+    //FRESH GAME LEVEL 1 CODE
+    if (game.global.world == 1 && game.global.totalHeliumEarned<=100){
+        if (game.resources.trimps.owned < game.resources.trimps.realMax() * 0.9){
+            if (game.resources.food.owned > 5 && freeWorkers > 0){
+                if (game.jobs.Farmer.owned == game.jobs.Lumberjack.owned)
+                    safeBuyJob('Farmer', 1);
+                else if (game.jobs.Farmer.owned > game.jobs.Lumberjack.owned && !game.jobs.Lumberjack.locked)
+                    safeBuyJob('Lumberjack', 1);
+            }
+            if (game.resources.food.owned > 20 && freeWorkers > 0){
+                if (game.jobs.Farmer.owned == game.jobs.Lumberjack.owned && !game.jobs.Miner.locked)
+                    safeBuyJob('Miner', 1);
+            }
+        }
+        return;
+    }
+    
+    if (game.global.challengeActive == 'Watch'){
+        scientistRatio = totalRatio / 10;
+        stopScientistsatFarmers = 1e8;
+        if (game.resources.trimps.owned < game.resources.trimps.realMax() * 0.9 && !breedFire){
+            //so the game buys scientists first while we sit around waiting for breed timer.
+            var buyScientists = Math.floor((scientistRatio / totalRatio * totalDistributableWorkers) - game.jobs.Scientist.owned);
+            if (game.jobs.Scientist.owned < buyScientists && game.resources.trimps.owned > game.resources.trimps.realMax() * 0.1){
+                var toBuy = buyScientists-game.jobs.Scientist.owned;
+                var canBuy = Math.floor(trimps.owned - trimps.employed);
+                if(buyScientists > 0 && freeWorkers > 0)
+                    safeBuyJob('Scientist',toBuy <= canBuy ? toBuy : canBuy);
+            }
+            else
+                return;
+        }
+    }
+    else
+    {   //exit if we are havent bred to at least 90% breedtimer yet...
+        if (game.resources.trimps.owned < game.resources.trimps.realMax() * 0.9 && !breedFire) return;
+    }
+    
     var oldBuy = game.global.buyAmt;
     if (game.jobs.Explorer.owned < getPageSetting('MaxExplorers') || getPageSetting('MaxExplorers') == -1) {
         game.global.buyAmt = 1;
