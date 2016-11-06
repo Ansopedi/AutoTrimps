@@ -141,7 +141,7 @@ document.getElementById("autoSettings").appendChild(genbtcadv);
 
 //genBTC advanced settings - option buttons.
 createSetting('GetNurseriesEarly', 'Early Nurseries', 'Run a single map at z25 to unlock Nurseries. ', 'boolean', null, null, 'genbtcadvancedSettings');
-createSetting('WaitTill60', 'Skip Gear Level 58&59', 'Dont Buy Gear during level 58 and 59, wait till level 60, when cost drops down to 10%.', 'boolean', null, null, 'genbtcadvancedSettings');
+createSetting('GoldenBattleZone', 'Golden Battle', 'Buy Golden Battle instead of selected Upgrade when at or above this zone.', 'value', '9999', null, 'genbtcadvancedSettings');
 createSetting('DelayArmorWhenNeeded', 'Delay Armor', 'Delay buying armor prestige upgrades during Want More Damage or Farming automap-modes.', 'boolean', null, null, 'genbtcadvancedSettings');
 createSetting('DynamicSiphonology', 'Dynamic Siphonology', 'Use the right level of siphonology based on your damage output.', 'boolean', true, null, 'genbtcadvancedSettings');
 createSetting('AutoRoboTrimp', 'AutoRoboTrimp', 'Use RoboTrimps ability starting at this level, and every 5 levels thereafter. (set to 0 to disable)', 'value', '60', null, 'genbtcadvancedSettings');
