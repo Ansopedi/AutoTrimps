@@ -304,38 +304,6 @@ function setTitle() {
     }
 }
 
-function getEnemyMaxAttack(world, level, name, diff, corrupt) {
-    var amt = 0;
-    var adjWorld = ((world - 1) * 100) + level;
-    amt += 50 * Math.sqrt(world) * Math.pow(3.27, world / 2);
-    amt -= 10;
-    if (world == 1){
-        amt *= 0.35;
-        amt = (amt * 0.20) + ((amt * 0.75) * (level / 100));
-    }
-    else if (world == 2){
-        amt *= 0.5;
-        amt = (amt * 0.32) + ((amt * 0.68) * (level / 100));
-    }
-    else if (world < 60)
-        amt = (amt * 0.375) + ((amt * 0.7) * (level / 100));
-    else{ 
-        amt = (amt * 0.4) + ((amt * 0.9) * (level / 100));
-        amt *= Math.pow(1.15, world - 59);
-    }
-    if (world < 60) amt *= 0.85;
-    if (world > 6 && game.global.mapsActive) amt *= 1.1;
-    if (diff) { 
-        amt *= diff;
-    }    
-    if (!corrupt)
-        amt *= game.badGuys[name].attack;
-    else {
-        amt *= mutations.Corruption.statScale(3);
-    }
-    return Math.floor(amt);
-}
-
 function getEnemyMaxHealth(world, level, corrupt) {
     if (!level)
         level = 1;
@@ -799,7 +767,7 @@ function autoLevelEquipment() {
             Status: 'white'
         }
     };
-    var enemyDamage = getEnemyMaxAttack(game.global.world + 1, 30, 'Snimp', .85);
+    var enemyDamage = 0;
     var enemyHealth = getEnemyMaxHealth(game.global.world + 1);
     
     //below challenge multiplier not necessarily accurate, just fudge factors
@@ -976,8 +944,8 @@ function autoStance() {
         hiderwindow = ovklHDratio;
         Area51i = ovkldmg;
         Area60i = getEnemyMaxHealth(game.global.world,1,true);
-        armorValue = ((baseHealth/8)/(getEnemyMaxAttack(game.global.world, 95, 'Snimp',0)*mutations.Corruption.statScale(3)));
-        armorTempValue = (game.global.soldierHealth/(getEnemyMaxAttack(game.global.world, 95, 'Snimp',0)*mutations.Corruption.statScale(3)));
+        armorValue = ((baseHealth/8)/1*mutations.Corruption.statScale(3)));
+        armorTempValue = (game.global.soldierHealth/(1*mutations.Corruption.statScale(3)));
         if (hiderwindow > 120) { // && game.global.world < getPageSetting('VoidMaps')
              //enoughDamage = true; enoughHealth = true; shouldFarm = false;
         }
@@ -1232,7 +1200,7 @@ function autoMap() {
     var mapbonusmulti = 1 + (0.20*game.global.mapBonus);
     baseDamage *= mapbonusmulti;    
     //get average enemyhealth and damage for the next zone, cell 30, snimp type and multiply it by a factor of .85 (don't ask why)
-    var enemyDamage = getEnemyMaxAttack(game.global.world + 1, 30, 'Snimp', .85);
+    var enemyDamage = 0;
     var enemyHealth = getEnemyMaxHealth(game.global.world + 1);    
     //farm if basedamage is between 10 and 16)
     if(!getPageSetting('DisableFarm')) {
@@ -1353,7 +1321,7 @@ function autoMap() {
             if(game.global.challengeActive == 'Toxicity' && game.challenges.Toxicity.stacks < (1500 - theMap.size)) break;
             doVoids = true;
             //check to make sure we won't get 1-shot in nostance by boss
-            var eAttack = getEnemyMaxAttack(game.global.world, theMap.size, 'Voidsnimp', theMap.difficulty);
+            var eAttack = 0;
             if (game.global.world >= 181 || (game.global.challengeActive == "Corrupted" && game.global.world >= 60))
                 eAttack *= (mutations.Corruption.statScale(3) / 2).toFixed(1);
             var ourHealth = baseHealth;
