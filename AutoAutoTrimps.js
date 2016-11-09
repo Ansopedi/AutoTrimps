@@ -633,19 +633,12 @@ function buyUpgrades() {
         upgrade = upgradeList[upgrade];
         var gameUpgrade = game.upgrades[upgrade];
         var available = (gameUpgrade.allowed > gameUpgrade.done && canAffordTwoLevel(gameUpgrade));
-		if (upgrade == 'Gigastation') {
-            buyUpgrade('Gigastation', true, true);
-            return;
-        }
         if (upgrade == 'Coordination' && !canAffordCoordinationTrimps()) continue;
-        if (upgrade == 'Shieldblock' && !getPageSetting('BuyShieldblock')) continue;
-        if ((game.global.lastWarp >= game.buildings.Warpstation.owned && upgrade == 'Gigastation') || upgrade == 'Gigastation' && (game.global.lastWarp ? (game.buildings.Warpstation.owned < game.global.lastWarp + getPageSetting('DeltaGigastation') + 0 - gameUpgrade.allowed + gameUpgrade.done) : game.buildings.Warpstation.owned < getPageSetting('FirstGigastation'))) continue;
+        if (upgrade == 'Shieldblock') continue;
         if ((!game.upgrades.Scientists.done && upgrade != 'Battle') ? (available && upgrade == 'Scientists' && game.upgrades.Scientists.allowed) : (available)) {
             buyUpgrade(upgrade, true, true);
             debug('Upgraded ' + upgrade,"*upload2");
         }
-        //skip bloodlust during scientist challenges and while we have autofight enabled.
-        if (upgrade == 'Bloodlust' && game.global.challengeActive == 'Scientist' && getPageSetting('AutoFight'))    continue;
     }
 }
 
