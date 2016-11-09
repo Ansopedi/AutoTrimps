@@ -1694,7 +1694,6 @@ function mainLoop() {
     updateValueFields3(); //refresh the UI2
 
     if (getPageSetting('WorkerRatios')) workerRatios(); //"Auto Worker Ratios"
-    if (getPageSetting('BuyUpgrades')) buyUpgrades();   //"Buy Upgrades"
     autoGoldenUpgrades();                               //"AutoGoldenUpgrades" (genBTC settings area)
     if (getPageSetting('BuyStorage')) buyStorage();     //"Buy Storage"
     if (getPageSetting('BuyBuildings')) buyBuildings(); //"Buy Buildings"
@@ -1703,6 +1702,7 @@ function mainLoop() {
     if (autoTrimpSettings.AutoPortal.selected != "Off") autoPortal();   //"Auto Portal" (hidden until level 60)
     if (getPageSetting('TrapTrimps') && game.global.trapBuildAllowed && game.global.trapBuildToggled == false) toggleAutoTrap(); //"Trap Trimps"
     autoLevelEquipment();                                   //"Buy Armor", "Buy Armor Upgrades", "Buy Weapons","Buy Weapons Upgrades"
+    if (getPageSetting('BuyUpgrades')) buyUpgrades();   //"Buy Upgrades"
     autoStance();                                           //"Auto Stance"
     if (getPageSetting('AutoMaps')) autoMap();          //"Auto Maps"  
     getNiceThingsDone();					//Paint things.
