@@ -944,7 +944,7 @@ function autoStance() {
         hiderwindow = ovklHDratio;
         Area51i = ovkldmg;
         Area60i = getEnemyMaxHealth(game.global.world,1,true);
-        armorValue = ((baseHealth/8)/1*mutations.Corruption.statScale(3)));
+        armorValue = ((baseHealth/8)/1*mutations.Corruption.statScale(3));
         armorTempValue = (game.global.soldierHealth/(1*mutations.Corruption.statScale(3)));
         if (hiderwindow > 120) { // && game.global.world < getPageSetting('VoidMaps')
              //enoughDamage = true; enoughHealth = true; shouldFarm = false;
