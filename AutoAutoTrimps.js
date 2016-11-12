@@ -1116,7 +1116,8 @@ function autoMap() {
     var oddNerf = (game.global.world%2===1&&game.global.challengeActive == "Daily"&&typeof game.global.dailyChallenge.oddTrimpNerf!== 'undefined');
     var evenBuff = (game.global.challengeActive == "Daily"&&typeof game.global.dailyChallenge.evenTrimpBuff!== 'undefined');
     var badMapHealth = ((game.global.challengeActive == "Daily"&&typeof game.global.dailyChallenge.badMapHealth !== 'undefined')?dailyModifiers.badMapHealth.getMult(game.global.dailyChallenge.badMapHealth.strength):1);
-    needToVoid = game.global.totalVoidMaps > 0 && (hiderwindow < 15*badMapHealth && hiderwindow > 5*badMapHealth && noPrestigeBacklog &&!oddNerf &&(!evenBuff||game.global.world%2===0));    
+    needToVoid = game.global.totalVoidMaps > 0 && (hiderwindow < 15*badMapHealth && hiderwindow > 5*badMapHealth && noPrestigeBacklog &&!oddNerf &&(!evenBuff||game.global.world%2===0)); 
+    var selectedMap = "world";
     var mapYouSlow = false;
         if (
         ((game.global.mapBonus < 10 && hiderwindow < 0.0275 ) || (game.global.mapBonus < 9 && hiderwindow < 0.03 ) || (game.global.mapBonus < 8 && hiderwindow < 0.036 ) || (game.global.mapBonus < 7 && hiderwindow < 0.05 ) || (game.global.mapBonus < 6 && hiderwindow < 0.08 ) || (game.global.mapBonus < 5 && hiderwindow < 0.13 ) || (game.global.mapBonus < 4 && hiderwindow <0.2 ) || (game.global.mapBonus < 3 && hiderwindow < 0.5 ) || (game.global.mapBonus < 2 && hiderwindow < 0.75 ) || (game.global.mapBonus < 1 && hiderwindow < 100 && game.global.lastClearedCell<31 ) || (game.global.mapBonus < 1 && hiderwindow < 10 && game.global.lastClearedCell<51 )))	
