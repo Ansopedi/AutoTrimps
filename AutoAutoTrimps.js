@@ -883,8 +883,8 @@ function autoStance() {
     }
 	if (game.global.world>=71){
     var badMapHealth = ((game.global.challengeActive == "Daily"&&typeof game.global.dailyChallenge.badMapHealth !== 'undefined')?dailyModifiers.badMapHealth.getMult(game.global.dailyChallenge.badMapHealth.strength):1);
-    if (game.global.mapsActive && (getCurrentEnemy(1).name == "Jestimp" || getCurrentEnemy(1).name == "Chronoimp" ||  (hiderwindow > (800*0.85*0.45*0.12/mutations.Corruption.statScale(10)/(game.global.titimpLeft>0?2:1)*badMapHealth) && getCurrentMapObject().location != "Void"))){ setFormation(4); return;}
-    if (game.global.mapsActive && (getCurrentEnemy(1).name != "Jestimp" && getCurrentEnemy(1).name != "Chronoimp" &&  (hiderwindow < (800*0.85*0.45*0.12/mutations.Corruption.statScale(10)/(game.global.titimpLeft>0?2:1)*badMapHealth) && getCurrentMapObject().location != "Void"))){ setFormation(2); return;}
+    if (game.global.mapsActive && (getCurrentEnemy(1).name == "Jestimp" || getCurrentEnemy(1).name == "Chronoimp" ||  (hiderwindow > (800*0.45*0.12/mutations.Corruption.statScale(10)/(game.global.titimpLeft>0?2:1)*badMapHealth) && getCurrentMapObject().location != "Void"))){ setFormation(4); return;}
+    if (game.global.mapsActive && (getCurrentEnemy(1).name != "Jestimp" && getCurrentEnemy(1).name != "Chronoimp" &&  (hiderwindow < (800*0.45*0.12/mutations.Corruption.statScale(10)/(game.global.titimpLeft>0?2:1)*badMapHealth) && getCurrentMapObject().location != "Void"))){ setFormation(2); return;}
     if (game.global.mapsActive && (getCurrentEnemy(1).name == "Jestimp" || getCurrentEnemy(1).name == "Chronoimp" ||  (hiderwindow > (800/(game.global.titimpLeft>0?2:1)*badMapHealth) && getCurrentMapObject().location == "Void"))){ setFormation(4); return;}
     if (!game.global.mapsActive && (hiderwindow > 660)){ setFormation(4); return;}
     
