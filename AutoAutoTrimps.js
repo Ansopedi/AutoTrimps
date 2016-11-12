@@ -1216,7 +1216,6 @@ function autoMap() {
 
                 biomeAdvMapsSelect.value = "Plentiful";
                 updateMapCost();
-            else {
             	while (true){
                 debug("BUYING a Map, level: #" + document.getElementById("mapLevelInput").value, 'th-large');
                 var result = buyMap();
