@@ -730,7 +730,7 @@ function autoLevelEquipment() {
         enemyHealth *= 7;
     }
     //change name to make sure these are local to the function
-    var enoughHealthE = true&&game.global.world>200){;
+    var enoughHealthE = true&&game.global.world>200;
     var enoughDamageE = hiderwindow>30&&game.global.world>200;
     
     if (game.global.world == 200) { //&& ((new Date().getTime() - game.global.zoneStarted) / 1000 / 60) > 10 && ((new Date().getTime() - game.global.zoneStarted) / 1000 / 60) < 20){		
