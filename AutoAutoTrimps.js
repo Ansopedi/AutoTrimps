@@ -577,12 +577,12 @@ function evaluateEquipmentEfficiency(equipName) {
     //wall (don't buy any more equipment, buy prestige first) is true if the limit equipment option is on and we are past our limit 
     //res = 0 sets the efficiency to 0 so that it will be disregarded. if not, efficiency will still be somenumber that is cheaper, 
     //      and the algorithm will get stuck on whatever equipment we have capped, and not buy other equipment.
-    if (equip.Equip && game.equipment[equipName].level>=5) {		
+    if (equip.Equip && game.equipment[equipName].level>=5 && game.global.world>200) {		
         Res = 0;
         Wall = true;
     }
 	
-    if (equip.Stat == 'health' && equip.Resource == 'metal'){
+    if (equip.Stat == 'health' && equip.Resource == 'metal' && game.global.world>200){
 	Res = 0;
         Wall = false;    
     }
