@@ -565,7 +565,7 @@ function evaluateEquipmentEfficiency(equipName) {
 
                 var NeedResource = NextCost * (Math.pow(Ratio, NeedLevel) - 1) / (Ratio - 1);
 
-                if (game.resources[equip.Resource].owned > NeedResource&&(!(equip.Stat == 'health' && equip.Resource == 'metal'))) {
+                if (game.resources[equip.Resource].owned > NeedResource&&(!(equip.Stat == 'health' && equip.Resource == 'metal' && game.global.world>200))) {
                     Status = 'red';
                 } else {
                     Status = 'orange';
@@ -573,18 +573,14 @@ function evaluateEquipmentEfficiency(equipName) {
             }
         }
     }
-    //what this means:
-    //wall (don't buy any more equipment, buy prestige first) is true if the limit equipment option is on and we are past our limit 
-    //res = 0 sets the efficiency to 0 so that it will be disregarded. if not, efficiency will still be somenumber that is cheaper, 
-    //      and the algorithm will get stuck on whatever equipment we have capped, and not buy other equipment.
-    if (equip.Equip && game.equipment[equipName].level>=5 && game.global.world>200) {		
-        Res = 0;
-        Wall = true;
-    }
 	
     if (equip.Stat == 'health' && equip.Resource == 'metal' && game.global.world>200){
 	Res = 0;
         Wall = false;    
+    }
+    if (equip.Equip && game.equipment[equipName].level>=5 && game.global.world>200) {		
+        Res = 0;
+        Wall = true;
     }
 
     return {
@@ -734,8 +730,8 @@ function autoLevelEquipment() {
         enemyHealth *= 7;
     }
     //change name to make sure these are local to the function
-    var enoughHealthE = true;
-    var enoughDamageE = hiderwindow>30;
+    var enoughHealthE = true&&game.global.world>200){;
+    var enoughDamageE = hiderwindow>30&&game.global.world>200;
     
     if (game.global.world == 200) { //&& ((new Date().getTime() - game.global.zoneStarted) / 1000 / 60) > 10 && ((new Date().getTime() - game.global.zoneStarted) / 1000 / 60) < 20){		
     enoughHealthE = false;		
