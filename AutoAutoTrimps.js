@@ -1169,8 +1169,9 @@ function autoMap() {
         }         
     }
     if (!game.global.preMapsActive && game.global.mapsActive) {
-        //if we are doing the right map, and it's not a norecycle (unique) map, and we aren't going to hit max map bonus
-        //or repeatbionics is true and there are still prestige items available to get
+        if (!game.global.repeatMap) {
+                repeatClicked();
+             }
         if (selectedMap == game.global.currentMapId && (!getCurrentMapObject().noRecycle && (game.global.mapBonus < 10)) || (repeatBionics && addSpecials(true, true, getCurrentMapObject()) > 0)) {
             if (
         (!((game.global.mapBonus+1 < 10 && hiderwindow < 0.0275 ) || (game.global.mapBonus+1 < 9 && hiderwindow < 0.03 ) || (game.global.mapBonus+1 < 8 && hiderwindow < 0.036 ) || (game.global.mapBonus+1 < 7 && hiderwindow < 0.05 ) || (game.global.mapBonus+1 < 6 && hiderwindow < 0.08 ) || (game.global.mapBonus+1 < 5 && hiderwindow < 0.13 ) || (game.global.mapBonus+1 < 4 && hiderwindow < 0.2 ) || (game.global.mapBonus+1 < 3 && hiderwindow < 0.5 ) || (game.global.mapBonus+1 < 2 && hiderwindow < 0.75 )))){
