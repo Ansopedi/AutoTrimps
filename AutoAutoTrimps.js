@@ -732,11 +732,6 @@ function autoLevelEquipment() {
     //change name to make sure these are local to the function
     var enoughHealthE = true&&game.global.world>200;
     var enoughDamageE = hiderwindow>30&&game.global.world>200;
-    
-    if (game.global.world == 200) { //&& ((new Date().getTime() - game.global.zoneStarted) / 1000 / 60) > 10 && ((new Date().getTime() - game.global.zoneStarted) / 1000 / 60) < 20){		
-    enoughHealthE = false;		
-    enoughDamageE = false;		
-    }
 
     for (var equipName in equipmentList) {
         var equip = equipmentList[equipName];
@@ -781,7 +776,7 @@ function autoLevelEquipment() {
                     || (gameResource.prestige+4 <= (game.global.world-5)/5 && game.global.soldierHealth > 0 && ((armorTempValue > 20 && armorTempValue < 50)|| armorValue < 500))
                     || (gameResource.prestige+3 <= (game.global.world-5)/5 && game.global.soldierHealth > 0 && ((armorTempValue > 10 && armorTempValue < 20)|| armorValue < 200))
                     || (gameResource.prestige+2 <= (game.global.world-5)/5 && game.global.soldierHealth > 0 && ((armorTempValue > 1 && armorTempValue < 10)|| armorValue < 100)))
-                    || gameResource.prestige < 5 || game.global.world == 200 ) && (equipmentList[equipName].Stat == 'health'))
+                    || gameResource.prestige < 5 || game.global.world <= 200 ) && (equipmentList[equipName].Stat == 'health'))
                         && 
                 //Only buy Armor prestiges when 'DelayArmorWhenNeeded' is on, IF:
                         (
